@@ -1,16 +1,2926 @@
 {
   "version": "2.3.0",
   "summary": {
-    "title": "Modelo de Amenazas",
-    "owner": "",
-    "description": "",
+    "title": "Microservicio_Auth",
+    "owner": "Miguel Pilamunga ",
+    "description": "es un sistema de control de roles y permisos ",
     "id": 0
   },
   "detail": {
     "contributors": [],
-    "diagrams": [],
-    "diagramTop": 0,
-    "reviewer": "",
-    "threatTop": 0
+    "diagrams": [
+      {
+        "id": 1,
+        "title": "model",
+        "diagramType": "LINDDUN",
+        "placeholder": "New LINDDUN diagram description",
+        "thumbnail": "./public/content/images/thumbnail.linddun.jpg",
+        "version": "2.3.0",
+        "cells": [
+          {
+            "position": {
+              "x": 530,
+              "y": 10
+            },
+            "size": {
+              "width": 469.33333333333337,
+              "height": 220
+            },
+            "attrs": {
+              "headerText": {
+                "text": "Public Zone"
+              }
+            },
+            "visible": true,
+            "shape": "trust-boundary-box",
+            "zIndex": -1,
+            "id": "9fe684f7-8096-45d7-bde6-e3a7a42c1cbf",
+            "data": {
+              "type": "tm.BoundaryBox",
+              "name": "Public Zone",
+              "description": "",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            }
+          },
+          {
+            "position": {
+              "x": 161.33333333333303,
+              "y": 240
+            },
+            "size": {
+              "width": 618.666666666667,
+              "height": 290
+            },
+            "attrs": {
+              "headerText": {
+                "text": "Zona de Autenticación"
+              }
+            },
+            "visible": true,
+            "shape": "trust-boundary-box",
+            "zIndex": -1,
+            "id": "7767367a-5323-478c-ba65-73fc96256fe5",
+            "data": {
+              "type": "tm.BoundaryBox",
+              "name": "Zona de Autenticación",
+              "description": "",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            }
+          },
+          {
+            "position": {
+              "x": 580,
+              "y": 640
+            },
+            "size": {
+              "width": 620,
+              "height": 290.625
+            },
+            "attrs": {
+              "headerText": {
+                "text": "Zona Authenticación"
+              }
+            },
+            "visible": true,
+            "shape": "trust-boundary-box",
+            "zIndex": -1,
+            "id": "f8629df2-990c-4ebd-b7c9-6d0eb4f2e39d",
+            "data": {
+              "type": "tm.BoundaryBox",
+              "name": "Zona Authenticación",
+              "description": "",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            }
+          },
+          {
+            "position": {
+              "x": 1031,
+              "y": 270
+            },
+            "size": {
+              "width": 448.0000000000001,
+              "height": 210
+            },
+            "attrs": {
+              "headerText": {
+                "text": "Zona Almacenamiento"
+              }
+            },
+            "visible": true,
+            "shape": "trust-boundary-box",
+            "id": "0b18b906-29d2-4a01-803e-91a2f0c16a33",
+            "zIndex": -1,
+            "data": {
+              "type": "tm.BoundaryBox",
+              "name": "Zona Almacenamiento",
+              "description": "",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            }
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Credenciales",
+              "description": "Nombre del Flujo: \"Canal de Transmisión Usuario-Cliente\"\nDescripción Técnica:\nCanal de comunicación HTTPS entre el navegador del usuario y la aplicación Yew para transmisión de credenciales de autenticación y datos de sesión.",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "ebb3bd6b-790e-4c11-b26b-ff1ddfcff06b",
+                  "title": "Cross-Site Request Forgery (CSRF)  [CWE-352]",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Linkability / Facilidad de vinculación",
+                  "description": "Explotación de confianza del navegador para ejecutar acciones no autorizadas en nombre del usuario autenticado.",
+                  "mitigation": "Implementar tokens CSRF, validar Origin/Referer headers, SameSite cookies",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 1,
+                  "score": "8.6"
+                },
+                {
+                  "id": "5f7f1f11-79c3-47e6-962b-a00cb22e4879",
+                  "title": "Man-in-the-Middle Attack (MITM)\" [CWE-300]",
+                  "status": "Mitigated",
+                  "severity": "High",
+                  "type": "Identifiability / Identificabilidad",
+                  "description": "Intercepción activa de comunicación entre usuario y cliente web.",
+                  "mitigation": "HSTS, Certificate Pinning, TLS 1.3 obligatorio",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 5,
+                  "score": "7.4"
+                },
+                {
+                  "id": "88b6b22e-05d5-4dd5-b257-fc096f6a2f67",
+                  "title": "\"SSL/TLS Protocol Downgrade\" [CWE-757]",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Non-repudiation / No-repudiación",
+                  "description": "Forzar uso de versiones antiguas de SSL/TLS con vulnerabilidades conocidas.",
+                  "mitigation": "Deshabilitar protocolos antiguos, implementar TLS_FALLBACK_SCSV",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 6,
+                  "score": "7.5"
+                }
+              ],
+              "threatFrequency": {
+                "linkability": 4,
+                "identifiability": 1,
+                "nonRepudiation": 1,
+                "detectability": 0,
+                "disclosureOfInformation": 0,
+                "nonCompliance": 0
+              }
+            },
+            "labels": [
+              "Credenciales"
+            ],
+            "id": "06a6b2cf-4e98-4585-9255-fbf5725bb6b5",
+            "source": {
+              "cell": "f45691d0-dcb4-497b-8ad7-1c8c16a6e815",
+              "port": "3a29866a-0682-408e-adcb-d28ecbb019bf"
+            },
+            "target": {
+              "cell": "b36bc6bc-8e33-48ee-ac2b-e86c9c701209",
+              "port": "86d41d70-5dcb-4e80-8690-da1277a8a26d"
+            },
+            "vertices": [
+              {
+                "x": 760,
+                "y": 120
+              },
+              {
+                "x": 670,
+                "y": 90
+              },
+              {
+                "x": 615,
+                "y": 90
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Authorization\n Request Flow",
+              "description": "Transmisión de solicitudes de autenticación/autorización vía HTTPS/TLS 1.3",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "af1f0705-ceac-482e-ab48-d444a52bbf9f",
+                  "title": "Authorization Code Interception [CWE-598]",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Disclosure of information / Brecha de información ",
+                  "description": " Interceptación de código durante redirección OAuth2",
+                  "mitigation": "PKCE obligatorio, validación state param, timeouts cortos",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 7,
+                  "score": "8.3"
+                },
+                {
+                  "id": "af1f0705-ceac-482e-ab48-d444a52bbf9f",
+                  "title": "Authorization Code Injection [CWE-384]",
+                  "status": "Mitigated",
+                  "severity": "High",
+                  "type": "Non-repudiation / No-repudiación",
+                  "description": " Inyección de códigos de autorización maliciosos",
+                  "mitigation": "Validación de callback URLs, timeouts cortos",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 7,
+                  "score": "7.4"
+                }
+              ],
+              "threatFrequency": {
+                "linkability": 0,
+                "identifiability": 0,
+                "nonRepudiation": 1,
+                "detectability": 0,
+                "disclosureOfInformation": 2,
+                "nonCompliance": 0
+              }
+            },
+            "labels": [
+              "Authorization\n Request Flow"
+            ],
+            "id": "7c5ac3ea-a29b-44af-956b-65c2842459b3",
+            "source": {
+              "cell": "b36bc6bc-8e33-48ee-ac2b-e86c9c701209"
+            },
+            "target": {
+              "cell": "647cd805-21f9-4738-9205-cbecb94e0a6a"
+            },
+            "vertices": [
+              {
+                "x": 550,
+                "y": 280
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Token Response\n Flow",
+              "description": " Envío de tokens JWT y datos de sesión post-autenticación",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "af1f0705-ceac-482e-ab48-d444a52bbf9f",
+                  "title": "Token Disclosure [CWE-200]",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Disclosure of information / Brecha de información ",
+                  "description": " Exposición de tokens en respuestas HTTP",
+                  "mitigation": " JWE, secure headers, token binding",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 7,
+                  "score": "8.7"
+                },
+                {
+                  "id": "2354c6d6-b174-40e4-8a1e-cb36371ff5cf",
+                  "title": "Token Injection [CWE-290]",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Non-repudiation / No-repudiación",
+                  "description": "Inyección de tokens maliciosos en respuesta",
+                  "mitigation": " Firma verificable, validación de claims",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 19,
+                  "score": "7.8"
+                }
+              ],
+              "threatFrequency": {
+                "linkability": 0,
+                "identifiability": 0,
+                "nonRepudiation": 1,
+                "detectability": 0,
+                "disclosureOfInformation": 1,
+                "nonCompliance": 0
+              }
+            },
+            "labels": [
+              "Token Response\n Flow"
+            ],
+            "id": "5fab5147-e471-45de-b884-739b93b935ed",
+            "source": {
+              "cell": "647cd805-21f9-4738-9205-cbecb94e0a6a"
+            },
+            "target": {
+              "cell": "b36bc6bc-8e33-48ee-ac2b-e86c9c701209"
+            },
+            "vertices": [
+              {
+                "x": 660,
+                "y": 300
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Token Generation\n Request Flow",
+              "description": " Solicitudes de generación de tokens con parámetros y claims",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "af1f0705-ceac-482e-ab48-d444a52bbf9f",
+                  "title": " Access Pattern Disclosure",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Linkability / Facilidad de vinculación",
+                  "description": "Vinculación de patrones de generación de tokens\n",
+                  "mitigation": " Aleatorización de tiempos, padding de requests",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 7,
+                  "score": "8.5"
+                },
+                {
+                  "id": "af1f0705-ceac-482e-ab48-d444a52bbf9f",
+                  "title": "Token Parameter Exposure",
+                  "status": "Mitigated",
+                  "severity": "High",
+                  "type": "Disclosure of information / Brecha de información ",
+                  "description": "Exposición de datos sensibles en generación",
+                  "mitigation": " Canal cifrado interno, minimización de datos",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 7,
+                  "score": "7.8"
+                }
+              ],
+              "threatFrequency": {
+                "linkability": 1,
+                "identifiability": 0,
+                "nonRepudiation": 0,
+                "detectability": 0,
+                "disclosureOfInformation": 1,
+                "nonCompliance": 0
+              }
+            },
+            "labels": [
+              "Token Generation\n Request Flow"
+            ],
+            "id": "0f7199b9-1a8e-4c62-bdc6-97654ac15d1b",
+            "source": {
+              "cell": "647cd805-21f9-4738-9205-cbecb94e0a6a"
+            },
+            "target": {
+              "cell": "dc954197-0f7e-459d-a09c-8361c133ff54"
+            },
+            "vertices": [
+              {
+                "x": 470,
+                "y": 330
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Token Storage\n Flow",
+              "description": "Persistencia de tokens en cache distribuida",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "af1f0705-ceac-482e-ab48-d444a52bbf9f",
+                  "title": " Token Storage Correlation",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Linkability / Facilidad de vinculación",
+                  "description": "Vinculación de tokens almacenados",
+                  "mitigation": "Particionamiento, keys aleatorias",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 7,
+                  "score": "7.4"
+                }
+              ],
+              "threatFrequency": {
+                "linkability": 1,
+                "identifiability": 0,
+                "nonRepudiation": 0,
+                "detectability": 0,
+                "disclosureOfInformation": 0,
+                "nonCompliance": 0
+              }
+            },
+            "labels": [
+              "Token Storage\n Flow"
+            ],
+            "id": "debd5d18-b09c-499b-8dd2-33dfda97ed1a",
+            "source": {
+              "cell": "dc954197-0f7e-459d-a09c-8361c133ff54"
+            },
+            "target": {
+              "cell": "6ba5fea7-9423-48c5-bccf-b3b4751e1a2b"
+            },
+            "vertices": [
+              {
+                "x": 530,
+                "y": 480
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": " Token Delivery Flow",
+              "description": "Retorno de tokens generados y metadatos asociados",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "af1f0705-ceac-482e-ab48-d444a52bbf9f",
+                  "title": "Token Correlation",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Linkability / Facilidad de vinculación",
+                  "description": "Correlación entre tokens y sesiones",
+                  "mitigation": "Tokens efímeros, rotación de IDs",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 7,
+                  "score": "7.9"
+                }
+              ],
+              "threatFrequency": {
+                "linkability": 1,
+                "identifiability": 0,
+                "nonRepudiation": 0,
+                "detectability": 0,
+                "disclosureOfInformation": 0,
+                "nonCompliance": 0
+              }
+            },
+            "labels": [
+              " Token Delivery Flow"
+            ],
+            "id": "3a165139-befd-40ac-816d-95767ce72915",
+            "source": {
+              "cell": "dc954197-0f7e-459d-a09c-8361c133ff54"
+            },
+            "target": {
+              "cell": "647cd805-21f9-4738-9205-cbecb94e0a6a"
+            },
+            "vertices": [
+              {
+                "x": 480,
+                "y": 420
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": " Token Retrieval\n Flow",
+              "description": "Consulta y recuperación de tokens almacenados",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "af1f0705-ceac-482e-ab48-d444a52bbf9f",
+                  "title": "Token Access Pattern",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Detectability / Detectabilidad",
+                  "description": "Detección de patrones de acceso a tokens",
+                  "mitigation": " Caching multinivel, accesos aleatorios",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 7,
+                  "score": "6.8"
+                }
+              ],
+              "threatFrequency": {
+                "linkability": 0,
+                "identifiability": 0,
+                "nonRepudiation": 0,
+                "detectability": 1,
+                "disclosureOfInformation": 0,
+                "nonCompliance": 0
+              }
+            },
+            "labels": [
+              " Token Retrieval\n Flow"
+            ],
+            "id": "8a6a0be3-6b4e-435e-bd4a-08b165fb2ad0",
+            "source": {
+              "cell": "6ba5fea7-9423-48c5-bccf-b3b4751e1a2b"
+            },
+            "target": {
+              "cell": "dc954197-0f7e-459d-a09c-8361c133ff54"
+            },
+            "vertices": [
+              {
+                "x": 460,
+                "y": 550
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Authorization Cache \nWrite Flow",
+              "description": "Persistencia de decisiones de autorización y estado de tokens\n",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "65d9fdb1-45a7-4ea0-97d2-2e70d58963bd",
+                  "title": "Cache Write Pattern Analysis",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Detectability / Detectabilidad",
+                  "description": "Patrones de escritura revelan información sobre decisiones de autorización",
+                  "mitigation": "Escrituras diferidas\nPadding aleatorio\nDistribución de cache",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 26,
+                  "score": "8.4"
+                }
+              ],
+              "threatFrequency": {
+                "linkability": 0,
+                "identifiability": 0,
+                "nonRepudiation": 0,
+                "detectability": 1,
+                "disclosureOfInformation": 0,
+                "nonCompliance": 0
+              }
+            },
+            "labels": [
+              "Authorization Cache \nWrite Flow"
+            ],
+            "id": "eb41d837-4cb7-455e-9ea7-b7624ec2e9d5",
+            "source": {
+              "cell": "71b5f651-b9f3-43fa-9091-fee415207944"
+            },
+            "target": {
+              "cell": "6ba5fea7-9423-48c5-bccf-b3b4751e1a2b"
+            },
+            "vertices": [
+              {
+                "x": 930,
+                "y": 480
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": " Authorization Cache \nRead Flow",
+              "description": "Recuperación de estado de autorización y validación de tokens",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "65d9fdb1-45a7-4ea0-97d2-2e70d58963bd",
+                  "title": "Cache Policy Information Leakage",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Disclosure of information / Brecha de información ",
+                  "description": " Fuga de información de políticas a través de consultas a cache\n",
+                  "mitigation": "Encriptación de datos en caché\nTTL dinámico\nSegmentación de datos sensibles",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 26,
+                  "score": "7.9"
+                }
+              ],
+              "threatFrequency": {
+                "linkability": 0,
+                "identifiability": 0,
+                "nonRepudiation": 0,
+                "detectability": 0,
+                "disclosureOfInformation": 1,
+                "nonCompliance": 0
+              }
+            },
+            "labels": [
+              " Authorization Cache \nRead Flow"
+            ],
+            "id": "38aa8a49-cc17-4883-831c-a28fb070b68b",
+            "source": {
+              "cell": "6ba5fea7-9423-48c5-bccf-b3b4751e1a2b"
+            },
+            "target": {
+              "cell": "71b5f651-b9f3-43fa-9091-fee415207944"
+            },
+            "vertices": [
+              {
+                "x": 870,
+                "y": 450
+              },
+              {
+                "x": 1010,
+                "y": 375
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Role Management \nWrite Flow",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "f7e9ce72-cd9c-4dfa-b2c9-0653017b1614",
+                  "title": "Role Operation Linkability [MITRE T1069]",
+                  "status": "Mitigated",
+                  "severity": "High",
+                  "type": "Linkability / Facilidad de vinculación",
+                  "description": "Vinculación de operaciones de roles entre sí",
+                  "mitigation": "Transaction batching\nOperation anonymization\nRandom delays",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 48,
+                  "score": "7.8"
+                }
+              ],
+              "threatFrequency": {
+                "linkability": 1,
+                "identifiability": 0,
+                "nonRepudiation": 0,
+                "detectability": 0,
+                "disclosureOfInformation": 0,
+                "nonCompliance": 0
+              }
+            },
+            "labels": [
+              "Role Management Write Flow"
+            ],
+            "id": "0205a24d-4c1c-48cf-aa11-00024c0b01e7",
+            "source": {
+              "cell": "2976537f-dfd4-4c0a-8bfa-21bf6b7d502b"
+            },
+            "target": {
+              "cell": "486ad49a-5c82-4a84-a545-57387f16d4f1"
+            },
+            "vertices": [
+              {
+                "x": 1310,
+                "y": 520
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Role Query Response Flow",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "a14cd65b-85fd-480d-8767-6e808beff193",
+                  "title": "Role Hierarchy Exposure [CVE-2023-32004]",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Disclosure of information / Brecha de información ",
+                  "description": " Exposición de relaciones jerárquicas en consultas",
+                  "mitigation": "View-based access\nHierarchical masking\nResponse sanitization",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 54,
+                  "score": "7.8"
+                }
+              ],
+              "threatFrequency": {
+                "linkability": 0,
+                "identifiability": 0,
+                "nonRepudiation": 0,
+                "detectability": 0,
+                "disclosureOfInformation": 1,
+                "nonCompliance": 0
+              }
+            },
+            "labels": [
+              "Role Query Response Flow"
+            ],
+            "id": "51ffa346-6a16-4402-9945-b62235a179c8",
+            "source": {
+              "cell": "486ad49a-5c82-4a84-a545-57387f16d4f1"
+            },
+            "target": {
+              "cell": "2976537f-dfd4-4c0a-8bfa-21bf6b7d502b"
+            },
+            "vertices": [
+              {
+                "x": 1360,
+                "y": 690
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Permission Query \nResponse Flow",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "f7e9ce72-cd9c-4dfa-b2c9-0653017b1614",
+                  "title": "Query Result Inference [CVE-2023-36891]",
+                  "status": "Mitigated",
+                  "severity": "High",
+                  "type": "Linkability / Facilidad de vinculación",
+                  "description": "Exposición de metadatos en resultados de consultas\n",
+                  "mitigation": "Data masking\nResult set filtering\nColumn encryption",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 48,
+                  "score": "8.2"
+                }
+              ],
+              "threatFrequency": {
+                "linkability": 1,
+                "identifiability": 2,
+                "nonRepudiation": 0,
+                "detectability": 0,
+                "disclosureOfInformation": 1,
+                "nonCompliance": 0
+              }
+            },
+            "labels": [
+              "Permission Query \nResponse Flow"
+            ],
+            "id": "e3106dd9-348f-4d8b-9c20-e05b1cca516b",
+            "source": {
+              "cell": "486ad49a-5c82-4a84-a545-57387f16d4f1"
+            },
+            "target": {
+              "cell": "38fc6775-10d6-4588-aca5-546f363d46ee",
+              "port": "c0b4c5ea-1dd5-47cd-a52d-dc116f8e699b"
+            },
+            "vertices": [
+              {
+                "x": 1220,
+                "y": 570
+              },
+              {
+                "x": 1255,
+                "y": 500
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Permission Data\n Write Flow",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "06c0986b-a5d7-4c36-841a-1878e58d4f42",
+                  "title": "Permission Write Pattern [MITRE T1213]",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Linkability / Facilidad de vinculación",
+                  "description": " Correlación de patrones de escritura de permisos",
+                  "mitigation": "Batch operations\nTransaction padding\nTiming normalization",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 47,
+                  "score": "7.5"
+                }
+              ],
+              "threatFrequency": {
+                "linkability": 1,
+                "identifiability": 0,
+                "nonRepudiation": 0,
+                "detectability": 0,
+                "disclosureOfInformation": 0,
+                "nonCompliance": 0
+              }
+            },
+            "labels": [
+              "Permission Data\n Write Flow"
+            ],
+            "id": "6beeb898-ba9e-40f1-b7c6-e6fe19d673f0",
+            "source": {
+              "x": 1260,
+              "y": 430
+            },
+            "target": {
+              "x": 1090,
+              "y": 710
+            },
+            "vertices": [
+              {
+                "x": 1120,
+                "y": 490
+              },
+              {
+                "x": 1089.33,
+                "y": 600
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Data Flow",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": []
+            },
+            "labels": [
+              "Data Flow"
+            ],
+            "id": "66967665-aa14-434b-80bc-676f88c842be",
+            "source": {
+              "cell": "486ad49a-5c82-4a84-a545-57387f16d4f1"
+            },
+            "target": {
+              "cell": "71b5f651-b9f3-43fa-9091-fee415207944"
+            }
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": " Authorization Policy Query Flow",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "84265062-8efb-46bf-b333-856383acaa17",
+                  "title": "Policy Query Pattern Analysis [CVE-2023-35784]",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Linkability / Facilidad de vinculación",
+                  "description": "Análisis de patrones de consultas revela estructura de políticas\n",
+                  "mitigation": "Query normalization\nPolicy caching\nRequest batching",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 58,
+                  "score": "8.3"
+                },
+                {
+                  "id": "84265062-8efb-46bf-b333-856383acaa17",
+                  "title": "Authorization State Disclosure [MITRE T1552]",
+                  "status": "Mitigated",
+                  "severity": "High",
+                  "type": "Disclosure of information / Brecha de información ",
+                  "description": "Exposición de estado de autorización en consultas",
+                  "mitigation": "Column-level encryption\nPolicy abstraction layers\nResult set filtering",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 58,
+                  "score": "7.8"
+                }
+              ],
+              "threatFrequency": {
+                "linkability": 1,
+                "identifiability": 0,
+                "nonRepudiation": 1,
+                "detectability": 0,
+                "disclosureOfInformation": 2,
+                "nonCompliance": 0
+              }
+            },
+            "labels": [
+              " Authorization Policy Query Flow"
+            ],
+            "id": "b321ae2d-7b54-4b15-b676-411336215fef",
+            "source": {
+              "cell": "71b5f651-b9f3-43fa-9091-fee415207944"
+            },
+            "target": {
+              "cell": "486ad49a-5c82-4a84-a545-57387f16d4f1"
+            },
+            "vertices": [
+              {
+                "x": 980,
+                "y": 530
+              }
+            ]
+          },
+          {
+            "position": {
+              "x": 730,
+              "y": 30
+            },
+            "size": {
+              "width": 112.5,
+              "height": 60
+            },
+            "attrs": {
+              "text": {
+                "text": "Usuario Final"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 11,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "2fb9374d-310b-4596-bcec-0569c39866cd"
+                },
+                {
+                  "group": "right",
+                  "id": "ed80b861-2208-4913-8ca4-9210daf0d224"
+                },
+                {
+                  "group": "bottom",
+                  "id": "3a29866a-0682-408e-adcb-d28ecbb019bf"
+                },
+                {
+                  "group": "left",
+                  "id": "d4227652-6115-4ac2-97bd-2441d9384a35"
+                }
+              ]
+            },
+            "id": "f45691d0-dcb4-497b-8ad7-1c8c16a6e815",
+            "data": {
+              "type": "tm.Actor",
+              "name": "Usuario Final",
+              "description": "Actor que inicia el flujo de autenticación enviando credenciales al Cliente Yew.\n",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "providesAuthentication": false,
+              "threats": [
+                {
+                  "id": "ebb3bd6b-790e-4c11-b26b-ff1ddfcff06b",
+                  "title": "Control de Identidad de Usuario Final",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Linkability / Facilidad de vinculación",
+                  "description": "Actor que inicia el flujo de autenticación enviando credenciales al Cliente Yew. Existe riesgo de vinculación entre diferentes sesiones del mismo usuario.",
+                  "mitigation": "Implementar rotación de identificadores de sesión y limitar metadatos almacenados por sesión.",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 1,
+                  "score": "8.2"
+                },
+                {
+                  "id": "a5a3438a-27e7-437b-9c69-0720a5aa70c8",
+                  "title": "Exposición de Identidad de Usuario",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Identifiability / Identificabilidad",
+                  "description": "Riesgo de identificación del usuario a través de patrones de comportamiento y metadatos del navegador.",
+                  "mitigation": "Implementar técnicas de anonimización de datos y minimizar recolección de información del navegador.",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 2,
+                  "score": "7"
+                },
+                {
+                  "id": "e2058034-1bb9-4c33-a63f-bed01195fcd2",
+                  "title": "Falta de Transparencia en Procesamiento",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Unawareness / Falta de Conciencia",
+                  "description": "Usuario puede no ser consciente del alcance del procesamiento de sus datos personales durante la autenticación.",
+                  "mitigation": "Implementar avisos claros de privacidad y consentimientos explícitos antes de la autenticación.",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 3,
+                  "score": "6"
+                }
+              ],
+              "threatFrequency": {
+                "linkability": 2,
+                "identifiability": 1,
+                "unawareness": 1
+              }
+            }
+          },
+          {
+            "position": {
+              "x": 820,
+              "y": 120
+            },
+            "size": {
+              "width": 168.75,
+              "height": 90
+            },
+            "attrs": {
+              "text": {
+                "text": "Aplicaciones Terceras"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 13,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "2fb9374d-310b-4596-bcec-0569c39866cd"
+                },
+                {
+                  "group": "right",
+                  "id": "ed80b861-2208-4913-8ca4-9210daf0d224"
+                },
+                {
+                  "group": "bottom",
+                  "id": "3a29866a-0682-408e-adcb-d28ecbb019bf"
+                },
+                {
+                  "group": "left",
+                  "id": "d4227652-6115-4ac2-97bd-2441d9384a35"
+                }
+              ]
+            },
+            "id": "1e042a2d-c97b-4d9d-9b7d-8141a17d515c",
+            "data": {
+              "type": "tm.Actor",
+              "name": "Aplicaciones Terceras",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "providesAuthentication": false,
+              "threats": [
+                {
+                  "id": "af1f0705-ceac-482e-ab48-d444a52bbf9f",
+                  "title": "Client Application Impersonation [CWE-287]",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Identifiability / Identificabilidad",
+                  "description": "Suplantación de aplicaciones cliente OAuth2 registradas\n",
+                  "mitigation": "Client secrets robustos, validación de redirects",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 7,
+                  "score": "8.5"
+                },
+                {
+                  "id": "af1f0705-ceac-482e-ab48-d444a52bbf9f",
+                  "title": "Unauthorized Application Access [CWE-285]",
+                  "status": "Mitigated",
+                  "severity": "High",
+                  "type": "Linkability / Facilidad de vinculación",
+                  "description": "Vinculación de múltiples solicitudes a una misma aplicación\n",
+                  "mitigation": " Rate limiting por client_id, rotación de secrets",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 7,
+                  "score": "7.8"
+                }
+              ],
+              "threatFrequency": {
+                "linkability": 1,
+                "identifiability": 1,
+                "unawareness": 0
+              }
+            }
+          },
+          {
+            "position": {
+              "x": 560,
+              "y": 110
+            },
+            "size": {
+              "width": 110,
+              "height": 110
+            },
+            "attrs": {
+              "text": {
+                "text": "Cliente Yew \n(SPA Frontend)"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 15,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "86d41d70-5dcb-4e80-8690-da1277a8a26d"
+                },
+                {
+                  "group": "right",
+                  "id": "9ce56840-ebb3-422c-a0cf-545b4e39a286"
+                },
+                {
+                  "group": "bottom",
+                  "id": "c0b4c5ea-1dd5-47cd-a52d-dc116f8e699b"
+                },
+                {
+                  "group": "left",
+                  "id": "c6fb9352-8d2f-4263-a858-6a499d053169"
+                }
+              ]
+            },
+            "id": "b36bc6bc-8e33-48ee-ac2b-e86c9c701209",
+            "data": {
+              "type": "tm.Process",
+              "name": "Cliente Yew \n(SPA Frontend)",
+              "description": "Aplicación web desarrollada en Yew/WebAssembly que maneja interfaz de autenticación y gestión de tokens.",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "handlesCardPayment": false,
+              "handlesGoodsOrServices": false,
+              "isWebApplication": false,
+              "privilegeLevel": "",
+              "threats": [
+                {
+                  "id": "af1f0705-ceac-482e-ab48-d444a52bbf9f",
+                  "title": "Cross-Site Scripting (XSS) [CWE-79]",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Linkability / Facilidad de vinculación",
+                  "description": "Ejecución de scripts maliciosos permitiendo vincular sesiones de usuarios",
+                  "mitigation": " CSP headers, sanitización inputs, escape HTML",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 7,
+                  "score": "8.2"
+                },
+                {
+                  "id": "0c6be022-b54d-4daa-b930-7b4d8ea522e7",
+                  "title": "Nueva amenaza LINDDUN",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Identifiability / Identificabilidad",
+                  "description": "Introduzca una descripción para esta amenaza",
+                  "mitigation": "Introduzca la mitigación o prevención para esta amenaza",
+                  "modelType": "LINDDUN",
+                  "new": true,
+                  "number": 8,
+                  "score": ""
+                },
+                {
+                  "id": "af1f0705-ceac-482e-ab48-d444a52bbf9f",
+                  "title": " DOM Based XSS [CWE-79]",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Linkability / Facilidad de vinculación",
+                  "description": " Manipulación del DOM exponiendo información sensible del proceso",
+                  "mitigation": "Validación datos, encapsulación componentes",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 7,
+                  "score": "7.5"
+                },
+                {
+                  "id": "af1f0705-ceac-482e-ab48-d444a52bbf9f",
+                  "title": " Insufficient Session Management [CWE-613]",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Non-repudiation / No-repudiación",
+                  "description": "Gestión inadecuada de sesiones permitiendo repudio de acciones",
+                  "mitigation": "Logs seguros, rotación tokens, validación timestamps",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 7,
+                  "score": "6.8"
+                }
+              ],
+              "threatFrequency": {
+                "linkability": 2,
+                "identifiability": 0,
+                "nonRepudiation": 1,
+                "detectability": 0,
+                "disclosureOfInformation": 0,
+                "nonCompliance": 0
+              }
+            }
+          },
+          {
+            "position": {
+              "x": 550,
+              "y": 320
+            },
+            "size": {
+              "width": 110,
+              "height": 110
+            },
+            "attrs": {
+              "text": {
+                "text": "Servidor\n Auth"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 16,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "86d41d70-5dcb-4e80-8690-da1277a8a26d"
+                },
+                {
+                  "group": "right",
+                  "id": "9ce56840-ebb3-422c-a0cf-545b4e39a286"
+                },
+                {
+                  "group": "bottom",
+                  "id": "c0b4c5ea-1dd5-47cd-a52d-dc116f8e699b"
+                },
+                {
+                  "group": "left",
+                  "id": "c6fb9352-8d2f-4263-a858-6a499d053169"
+                }
+              ]
+            },
+            "id": "647cd805-21f9-4738-9205-cbecb94e0a6a",
+            "data": {
+              "type": "tm.Process",
+              "name": "Servidor\n Auth",
+              "description": "Servidor de autenticación OAuth2/OpenID Connect implementado en Rust que gestiona el ciclo de vida de autenticación, emisión y validación de tokens JWT. Maneja múltiples flujos de autenticación incluyendo Authorization Code con PKCE, Client Credentials y Refresh Token.",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "handlesCardPayment": false,
+              "handlesGoodsOrServices": false,
+              "isWebApplication": false,
+              "privilegeLevel": "",
+              "threats": [
+                {
+                  "id": "af1f0705-ceac-482e-ab48-d444a52bbf9f",
+                  "title": "Broken Authentication [CWE-287]",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Disclosure of information / Brecha de información ",
+                  "description": "Fallas en el proceso de autenticación permitiendo acceso no autorizado. Incluye validación incorrecta de credenciales, gestión inadecuada de sesiones y tokens JWT mal configurados",
+                  "mitigation": "Implementación de rate limiting por IP/usuario\nValidación rigurosa de JWT claims\nRotación automática de claves de firma\nMonitoreo de intentos fallidos\nLogs detallados de autenticación",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 7,
+                  "score": "9.1"
+                },
+                {
+                  "id": "af1f0705-ceac-482e-ab48-d444a52bbf9f",
+                  "title": "Missing Endpoint Authorization [CWE-862]",
+                  "status": "Mitigated",
+                  "severity": "High",
+                  "type": "Non-repudiation / No-repudiación",
+                  "description": "Endpoints de autenticación expuestos sin la debida autorización permitiendo accesos indebidos a funcionalidades críticas del servidor. Incluye endpoints de revocación de tokens, registro de clientes y gestión de secretos\n",
+                  "mitigation": "Middleware de autorización en todos los endpoints\nValidación de scopes OAuth2\nAutenticación mutua TLS\nAuditoría de accesos administrativos",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 7,
+                  "score": "7.8"
+                },
+                {
+                  "id": "af1f0705-ceac-482e-ab48-d444a52bbf9f",
+                  "title": "Token Information Disclosure [CWE-200]",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Detectability / Detectabilidad",
+                  "description": "Exposición de información sensible en tokens JWT como roles, permisos o datos personales. Incluye tokens sin encriptar, claims innecesarios y metadatos expuestos",
+                  "mitigation": "Encriptación de tokens sensibles con JWE\nMinimización de claims en JWT\nValidación de audiencia\nSanitización de datos en tokens",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 7,
+                  "score": "7.8"
+                }
+              ],
+              "threatFrequency": {
+                "linkability": 0,
+                "identifiability": 0,
+                "nonRepudiation": 1,
+                "detectability": 1,
+                "disclosureOfInformation": 1,
+                "nonCompliance": 0
+              }
+            },
+            "tools": {
+              "items": [
+                "boundary",
+                "button-remove"
+              ],
+              "name": null
+            }
+          },
+          {
+            "position": {
+              "x": 300,
+              "y": 360
+            },
+            "size": {
+              "width": 110,
+              "height": 110
+            },
+            "attrs": {
+              "text": {
+                "text": "Token Generator"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 17,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "86d41d70-5dcb-4e80-8690-da1277a8a26d"
+                },
+                {
+                  "group": "right",
+                  "id": "9ce56840-ebb3-422c-a0cf-545b4e39a286"
+                },
+                {
+                  "group": "bottom",
+                  "id": "c0b4c5ea-1dd5-47cd-a52d-dc116f8e699b"
+                },
+                {
+                  "group": "left",
+                  "id": "c6fb9352-8d2f-4263-a858-6a499d053169"
+                }
+              ]
+            },
+            "id": "dc954197-0f7e-459d-a09c-8361c133ff54",
+            "data": {
+              "type": "tm.Process",
+              "name": "Token Generator",
+              "description": "Servicio especializado en la generación de JWTs con firma RSA/ECDSA, implementando rotación de claves y gestión de ciclo de vida de tokens. Responsable de firma criptográfica y generación de claims según OpenID Connect.",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "handlesCardPayment": false,
+              "handlesGoodsOrServices": false,
+              "isWebApplication": false,
+              "privilegeLevel": "",
+              "threats": [
+                {
+                  "id": "65d9fdb1-45a7-4ea0-97d2-2e70d58963bd",
+                  "title": "Token Collection Inference [CVE-2023-35165]",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Linkability / Facilidad de vinculación",
+                  "description": "Análisis de patrones en la generación de tokens permite vincular múltiples tokens al mismo usuario",
+                  "mitigation": "Aleatorización de JTI\nRotación de kid\nPadding aleatorio en tokens\nNormalización de tiempos de respuesta",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 26,
+                  "score": "8.4"
+                },
+                {
+                  "id": "65d9fdb1-45a7-4ea0-97d2-2e70d58963bd",
+                  "title": "Sensitive Claims Disclosure [CVE-2023-28867]",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Disclosure of information / Brecha de información ",
+                  "description": "Exposición de información sensible en claims no esenciales del JWT\n",
+                  "mitigation": "Encriptación de claims sensibles\nMinimización de datos expuestos\nValidación estricta de claims requeridos",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 26,
+                  "score": "7.9"
+                },
+                {
+                  "id": "65d9fdb1-45a7-4ea0-97d2-2e70d58963bd",
+                  "title": " Non-repudiable Token Generation [MITRE T1552]",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Non-repudiation / No-repudiación",
+                  "description": "Falta de trazabilidad en la generación de tokens impide repudiar creaciones no autorizadas",
+                  "mitigation": "Logging seguro de generación\nFirmas de auditoría\nMonitorización de anomalías",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 26,
+                  "score": "7.6"
+                }
+              ],
+              "threatFrequency": {
+                "linkability": 1,
+                "identifiability": 0,
+                "nonRepudiation": 1,
+                "detectability": 0,
+                "disclosureOfInformation": 1,
+                "nonCompliance": 0
+              }
+            }
+          },
+          {
+            "position": {
+              "x": 684.6666666666667,
+              "y": 690
+            },
+            "size": {
+              "width": 160,
+              "height": 80
+            },
+            "attrs": {
+              "text": {
+                "text": "Redis\n"
+              },
+              "topLine": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              },
+              "bottomLine": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "store",
+            "zIndex": 18,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "bb1c2aa3-90f8-4074-9163-231daae34ecb"
+                },
+                {
+                  "group": "right",
+                  "id": "95880ea8-a41e-4b41-97ea-1356f3c73ace"
+                },
+                {
+                  "group": "bottom",
+                  "id": "9627aaa4-a4ab-41e3-8fac-d79ec0054a3c"
+                },
+                {
+                  "group": "left",
+                  "id": "d5ea1092-5de2-4a65-9a55-43fee3a01ff3"
+                }
+              ]
+            },
+            "id": "6ba5fea7-9423-48c5-bccf-b3b4751e1a2b",
+            "data": {
+              "type": "tm.Store",
+              "name": "Redis\n",
+              "description": "Sistema de caché distribuido para almacenamiento de tokens JWT, implementando TTL automático y particionamiento. Utiliza Redis Cluster con TLS para comunicaciones.",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isALog": false,
+              "isEncrypted": false,
+              "isSigned": false,
+              "storesCredentials": false,
+              "storesInventory": false,
+              "threats": [
+                {
+                  "id": "65d9fdb1-45a7-4ea0-97d2-2e70d58963bd",
+                  "title": "Token Correlation Attack [CVE-2023-28424]",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Linkability / Facilidad de vinculación",
+                  "description": "Correlación de tokens almacenados permite vincular sesiones de usuario",
+                  "mitigation": "Particionamiento por tenant\nHashing de keys\nAislamiento de namespaces",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 26,
+                  "score": "8.2"
+                },
+                {
+                  "id": "16330fe5-b884-401c-a21d-ee846b12faf9",
+                  "title": " Token Correlation Attack [CVE-2023-28424]",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Identifiability / Identificabilidad",
+                  "description": " Correlación de tokens almacenados permite vincular sesiones de usuario",
+                  "mitigation": "Particionamiento por tenant\nHashing de keys\nAislamiento de namespaces",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 30,
+                  "score": "8.2"
+                },
+                {
+                  "id": "e4f97115-24ff-47ef-a846-933f31916fb3",
+                  "title": " Cache Access Pattern [MITRE T1213]",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Non-repudiation / No-repudiación",
+                  "description": "Patrones de acceso a caché revelan información sobre uso de tokens",
+                  "mitigation": "Accesos aleatorios\nPadding de datos\nCache warming",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 31,
+                  "score": "8.2"
+                },
+                {
+                  "id": "da71c3cd-e264-4498-b7d3-e78b49e3b518",
+                  "title": "Token Metadata Exposure [CVE-2023-32004]",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Disclosure of information / Brecha de información ",
+                  "description": "Metadata de tokens expuesta en caché permite inferir información sensible",
+                  "mitigation": "Encriptación en reposo\nSanitización de metadata\nControl de acceso granular",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 32,
+                  "score": "8.2"
+                }
+              ],
+              "threatFrequency": {
+                "linkability": 1,
+                "identifiability": 1,
+                "nonRepudiation": 1,
+                "detectability": 0,
+                "disclosureOfInformation": 1,
+                "nonCompliance": 0
+              }
+            },
+            "tools": {
+              "items": [
+                "boundary",
+                "button-remove"
+              ],
+              "name": null
+            }
+          },
+          {
+            "position": {
+              "x": 950,
+              "y": 720
+            },
+            "size": {
+              "width": 180,
+              "height": 90
+            },
+            "attrs": {
+              "text": {
+                "text": "Postgres"
+              },
+              "topLine": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              },
+              "bottomLine": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "store",
+            "zIndex": 19,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "bb1c2aa3-90f8-4074-9163-231daae34ecb"
+                },
+                {
+                  "group": "right",
+                  "id": "95880ea8-a41e-4b41-97ea-1356f3c73ace"
+                },
+                {
+                  "group": "bottom",
+                  "id": "9627aaa4-a4ab-41e3-8fac-d79ec0054a3c"
+                },
+                {
+                  "group": "left",
+                  "id": "d5ea1092-5de2-4a65-9a55-43fee3a01ff3"
+                }
+              ]
+            },
+            "id": "486ad49a-5c82-4a84-a545-57387f16d4f1",
+            "data": {
+              "type": "tm.Store",
+              "name": "Postgres",
+              "description": "Base de datos relacional que almacena usuarios, roles, permisos y mapeos de relaciones usando estructuras RBAC/ABAC. Implementa encriptación a nivel de columna y row-level security.",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isALog": false,
+              "isEncrypted": false,
+              "isSigned": false,
+              "storesCredentials": false,
+              "storesInventory": false,
+              "threats": [
+                {
+                  "id": "65d9fdb1-45a7-4ea0-97d2-2e70d58963bd",
+                  "title": " Database Schema Inference [CVE-2023-39417]",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Linkability / Facilidad de vinculación",
+                  "description": "Posibilidad de vincular relaciones entre tablas mediante análisis de consultas",
+                  "mitigation": "Encriptación de foreign keys\nViews dinámicas\nParticionamiento por tenant",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 26,
+                  "score": "8.3"
+                },
+                {
+                  "id": "65d9fdb1-45a7-4ea0-97d2-2e70d58963bd",
+                  "title": "Sensitive Data Exposure [MITRE T1213]",
+                  "status": "Mitigated",
+                  "severity": "High",
+                  "type": "Disclosure of information / Brecha de información ",
+                  "description": "Exposición de datos sensibles en logs y backups",
+                  "mitigation": "Encriptación transparent data encryption (TDE)\nData masking\nAuditoría de accesos",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 26,
+                  "score": "8.5"
+                }
+              ],
+              "threatFrequency": {
+                "linkability": 1,
+                "identifiability": 0,
+                "nonRepudiation": 0,
+                "detectability": 0,
+                "disclosureOfInformation": 1,
+                "nonCompliance": 0
+              }
+            }
+          },
+          {
+            "position": {
+              "x": 1058,
+              "y": 320
+            },
+            "size": {
+              "width": 110,
+              "height": 110
+            },
+            "attrs": {
+              "text": {
+                "text": "Servidor \nAutorización"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 20,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "86d41d70-5dcb-4e80-8690-da1277a8a26d"
+                },
+                {
+                  "group": "right",
+                  "id": "9ce56840-ebb3-422c-a0cf-545b4e39a286"
+                },
+                {
+                  "group": "bottom",
+                  "id": "c0b4c5ea-1dd5-47cd-a52d-dc116f8e699b"
+                },
+                {
+                  "group": "left",
+                  "id": "c6fb9352-8d2f-4263-a858-6a499d053169"
+                }
+              ]
+            },
+            "id": "71b5f651-b9f3-43fa-9091-fee415207944",
+            "data": {
+              "type": "tm.Process",
+              "name": "Servidor \nAutorización",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "handlesCardPayment": false,
+              "handlesGoodsOrServices": false,
+              "isWebApplication": false,
+              "privilegeLevel": "",
+              "threats": [
+                {
+                  "id": "65d9fdb1-45a7-4ea0-97d2-2e70d58963bd",
+                  "title": "Authorization Policy Inference [CVE-2023-22365]",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Linkability / Facilidad de vinculación",
+                  "description": " Vinculación de decisiones de autorización permite inferir políticas de acceso",
+                  "mitigation": "Aleatorización de respuestas\nNormalización de tiempos\nCacheo de decisiones",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 26,
+                  "score": "8.7"
+                },
+                {
+                  "id": "65d9fdb1-45a7-4ea0-97d2-2e70d58963bd",
+                  "title": "Role Hierarchy Disclosure [MITRE T1069]",
+                  "status": "Mitigated",
+                  "severity": "High",
+                  "type": "Identifiability / Identificabilidad",
+                  "description": "Exposición de jerarquía de roles a través de decisiones de autorización\n",
+                  "mitigation": "Enmascaramiento de roles\nMinimización de información en respuestas\nAislamiento de contextos",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 26,
+                  "score": "8.2"
+                },
+                {
+                  "id": "65d9fdb1-45a7-4ea0-97d2-2e70d58963bd",
+                  "title": " Non-repudiable Access Decisions [CVE-2023-28755]",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Non-repudiation / No-repudiación",
+                  "description": "Imposibilidad de repudiar decisiones de autorización tomadas\n",
+                  "mitigation": "Logging cifrado\nFirmas de auditoría\nVersionado de políticas",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 26,
+                  "score": "7.8"
+                }
+              ],
+              "threatFrequency": {
+                "linkability": 1,
+                "identifiability": 1,
+                "nonRepudiation": 1,
+                "detectability": 0,
+                "disclosureOfInformation": 0,
+                "nonCompliance": 0
+              }
+            }
+          },
+          {
+            "position": {
+              "x": 1200,
+              "y": 320
+            },
+            "size": {
+              "width": 110,
+              "height": 110
+            },
+            "attrs": {
+              "text": {
+                "text": "Gestor \nPermisos"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 21,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "86d41d70-5dcb-4e80-8690-da1277a8a26d"
+                },
+                {
+                  "group": "right",
+                  "id": "9ce56840-ebb3-422c-a0cf-545b4e39a286"
+                },
+                {
+                  "group": "bottom",
+                  "id": "c0b4c5ea-1dd5-47cd-a52d-dc116f8e699b"
+                },
+                {
+                  "group": "left",
+                  "id": "c6fb9352-8d2f-4263-a858-6a499d053169"
+                }
+              ]
+            },
+            "id": "38fc6775-10d6-4588-aca5-546f363d46ee",
+            "data": {
+              "type": "tm.Process",
+              "name": "Gestor \nPermisos",
+              "description": "Servicio especializado en la gestión CRUD de permisos, validación de políticas y aplicación de restricciones de acceso.",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "handlesCardPayment": false,
+              "handlesGoodsOrServices": false,
+              "isWebApplication": false,
+              "privilegeLevel": "",
+              "threats": [
+                {
+                  "id": "65d9fdb1-45a7-4ea0-97d2-2e70d58963bd",
+                  "title": "Permission Relationship Mining [MITRE T1069.001]",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Linkability / Facilidad de vinculación",
+                  "description": "Minería de relaciones entre permisos y recursos",
+                  "mitigation": "Aislamiento de contextos\nPermisos dinámicos\nRotación de identificadores",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 26,
+                  "score": "7.8"
+                },
+                {
+                  "id": "65d9fdb1-45a7-4ea0-97d2-2e70d58963bd",
+                  "title": "Permission Assignment Disclosure [CVE-2023-22654]",
+                  "status": "Mitigated",
+                  "severity": "High",
+                  "type": "Disclosure of information / Brecha de información ",
+                  "description": "Exposición de asignaciones de permisos durante operaciones CRUD",
+                  "mitigation": "Filtrado de respuestas\nLogs sanitizados\nEncriptación en tránsito",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 26,
+                  "score": "7.6"
+                }
+              ],
+              "threatFrequency": {
+                "linkability": 1,
+                "identifiability": 0,
+                "nonRepudiation": 0,
+                "detectability": 0,
+                "disclosureOfInformation": 1,
+                "nonCompliance": 0
+              }
+            }
+          },
+          {
+            "position": {
+              "x": 1350,
+              "y": 320
+            },
+            "size": {
+              "width": 110,
+              "height": 110
+            },
+            "attrs": {
+              "text": {
+                "text": "Gestor\n Roles"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 22,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "86d41d70-5dcb-4e80-8690-da1277a8a26d"
+                },
+                {
+                  "group": "right",
+                  "id": "9ce56840-ebb3-422c-a0cf-545b4e39a286"
+                },
+                {
+                  "group": "bottom",
+                  "id": "c0b4c5ea-1dd5-47cd-a52d-dc116f8e699b"
+                },
+                {
+                  "group": "left",
+                  "id": "c6fb9352-8d2f-4263-a858-6a499d053169"
+                }
+              ]
+            },
+            "id": "2976537f-dfd4-4c0a-8bfa-21bf6b7d502b",
+            "data": {
+              "type": "tm.Process",
+              "name": "Gestor\n Roles",
+              "description": "Servicio para administración de roles, jerarquías y heredabilidad de permisos según modelo RBAC.",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "handlesCardPayment": false,
+              "handlesGoodsOrServices": false,
+              "isWebApplication": false,
+              "privilegeLevel": "",
+              "threats": [
+                {
+                  "id": "65d9fdb1-45a7-4ea0-97d2-2e70d58963bd",
+                  "title": "Role Hierarchy Analysis [MITRE T1069.002]",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Linkability / Facilidad de vinculación",
+                  "description": " Análisis de jerarquía de roles mediante patrones de acceso",
+                  "mitigation": "Flatten de jerarquías en caché\nNormalización de consultas\nTiempo constante en validaciones",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 26,
+                  "score": "8.1"
+                },
+                {
+                  "id": "65d9fdb1-45a7-4ea0-97d2-2e70d58963bd",
+                  "title": " Administrative Role Exposure [CVE-2023-35632]",
+                  "status": "Mitigated",
+                  "severity": "High",
+                  "type": "Non-repudiation / No-repudiación",
+                  "description": " Imposibilidad de repudiar cambios administrativos en roles",
+                  "mitigation": "Firma digital de cambios\nVersionado de modificaciones\nAuditoría detallada",
+                  "modelType": "LINDDUN",
+                  "new": false,
+                  "number": 26,
+                  "score": "8.4"
+                }
+              ],
+              "threatFrequency": {
+                "linkability": 2,
+                "identifiability": 1,
+                "nonRepudiation": 2,
+                "detectability": 0,
+                "disclosureOfInformation": 0,
+                "nonCompliance": 0
+              }
+            }
+          }
+        ],
+        "description": "model"
+      }
+    ],
+    "diagramTop": 2,
+    "reviewer": "modelado amenasas de auth",
+    "threatTop": 59
   }
 }
