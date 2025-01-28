@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine  # Versión ligera de PostgreSQL
+    container_name: auth_db
+    environment:
+      POSTGRES_USER: admin      # Usuario de administración
+      POSTGRES_PASSWORD: securepassword123  # Contraseña segura
+      POSTGRES_DB: auth_db      # Nombre de la base de datos
+    ports:
+      - "5432:5432"             # Puerto expuesto (host:container)
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Volumen para persistencia
+    networks:
+      - auth_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d auth_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:                # Declaración del volumen
+
+networks:
+  auth_network:                 # Red aislada para seguridad
