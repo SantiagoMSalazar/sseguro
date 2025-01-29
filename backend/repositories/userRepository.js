@@ -34,7 +34,8 @@ export class UserRepository {
 
     return {
       id: user.id,
-      username: user.username
+      username: user.username,
+      rol: user.rol
     }
   }
 }
