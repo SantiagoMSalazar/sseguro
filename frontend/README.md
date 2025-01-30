@@ -1,5 +1,5 @@
 # Construcción del servicio de front
 
-1. preparación de entorno.
-2. uso de tokens
-3. refresh tokens
+- [ ] Utilizar Login de Miguel
+- [ ] Unir cambios de Rafa en el proyecto principal 
+- [ ] terminar otras Pantallas --> Rafa
