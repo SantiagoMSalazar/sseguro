@@ -35,6 +35,16 @@ export class UserRepository {
     return user.id
   }
 
+  static async findById (id) {
+    try {
+      const user = await User.findOne({ where: { id } }) // Busca al usuario por ID
+      if (!user) throw new Error('Usuario no encontrado')
+      return user
+    } catch (error) {
+      throw new Error(error.message)
+    }
+  }
+
   static async login ({ email, password }) {
     // Validaciones
     Validations.email(email)

@@ -67,6 +67,20 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const fetchProfile = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/profile', {
+        withCredentials: true
+      });
+      setUser(response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Error obteniendo perfil:', error);
+      setUser(null);
+      throw error;
+    }
+  };
+
   // Función para cerrar sesión
   const logout = async () => {
     try {
@@ -78,7 +92,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout }}>
+    <AuthContext.Provider value={{ user, login, register, logout, fetchProfile }}>
       {children}
     </AuthContext.Provider>
   );

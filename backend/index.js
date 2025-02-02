@@ -22,12 +22,16 @@ app.use(cookieParser())
 // Middleware para validar token
 const authenticateToken = (req, res, next) => {
   const token = req.cookies.access_token
-  if (!token) return res.status(401).json({ error: 'Acceso no autorizado' })
-  jwt.verify(token, SECRET_JWT_KEY, (err, user) => {
-    if (err) return res.status(403).json({ error: 'Acceso expirado' })
-    req.user = user
+  if (!token) {
+    return res.status(401).json({ error: 'Acceso no autorizado' })
+  }
+  try {
+    const decoded = jwt.verify(token, SECRET_JWT_KEY)
+    req.user = decoded // Asigna el usuario decodificado
     next()
-  })
+  } catch (err) {
+    return res.status(403).json({ error: 'Acceso expirado' })
+  }
 }
 
 // Endpoints
@@ -91,6 +95,25 @@ app.get('/logout', (req, res) => {
 // Ruta protegida
 app.get('/protected', authenticateToken, (req, res) => {
   res.send(`Bienvenido ${req.user.nombre}`)
+})
+// crud user
+app.get('/profile', authenticateToken, async (req, res) => {
+  try {
+    const userId = req.user.id // Ahora debería funcionar correctamente
+    const user = await UserRepository.findById(userId)
+    if (!user) throw new Error('Usuario no encontrado')
+    res.status(200).json({
+      id: user.id,
+      nombre: user.nombre,
+      email: user.email,
+      cedula: user.cedula,
+      telefono: user.telefono,
+      direccion: user.direccion,
+      fecha_nacimiento: user.fecha_nacimiento
+    })
+  } catch (error) {
+    res.status(400).json({ error: error.message })
+  }
 })
 
 // Iniciar servidor
