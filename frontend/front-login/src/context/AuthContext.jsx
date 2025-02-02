@@ -30,8 +30,8 @@ export const AuthProvider = ({ children }) => {
   const login = async (username, password) => {
     try {
       const response = await axios.post(
-        'http://82.197.66.199:5009',
-        { username, password },
+        'http://82.197.66.199:5009/auth/login',
+        { email:username, password },
         { withCredentials: true }
       );
       if (response.data.profile) {
@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
         throw new Error('No se recibió información del usuario');
       }
     } catch (error) {
-      throw new Error(error.response?.data?.error || 'Error al iniciar sesión');
+      throw new Error(error.response?.data?.error || 'Error al iniciar sesión'+error);
     }
   };
 
@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }) => {
         telefono: userData.telefono,
         direccion: userData.direccion,
         fecha_nacimiento: userData.fechaNacimiento,
-        ocupacion: 'user',
+        ocupacion: userData.ocupacion,
 
         /*
       "email": "test2@epn.edu.ec",
