@@ -19,7 +19,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
+    <div className="flex items-center justify-center h-screen bg-gray-100 text-black">
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-md">
         <h2 className="text-2xl mb-4">Registrarse</h2>
         <input
@@ -27,14 +27,14 @@ const RegisterPage = () => {
           placeholder="Usuario"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          className="block w-full p-2 mb-4 border rounded"
+          className="block w-full p-2 mb-4 border rounded text-black"
         />
         <input
           type="password"
           placeholder="Contraseña"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="block w-full p-2 mb-4 border rounded"
+          className="block w-full p-2 mb-4 border rounded text-black"
         />
         <button type="submit" className="w-full bg-green-500 text-white p-2 rounded">
           Registrarse

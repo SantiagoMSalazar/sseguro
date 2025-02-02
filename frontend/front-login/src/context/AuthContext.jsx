@@ -7,32 +7,38 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  // Verificar si el usuario está autenticado al cargar la aplicación
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/protected', {
+        const response = await axios.get('https://clasificador.aduanero.com.ec/apiv1/', {
           withCredentials: true,
         });
-        setUser(response.data.user);
-        console.log(response.data.user.rol);
-      // eslint-disable-next-line no-unused-vars
+        if (response.data.profile) {
+          setUser(response.data.profile);
+          console.log('Usuario autenticado:', response.data.profile.roles);
+        } else {
+          setUser(null);
+        }
       } catch (error) {
+        console.error('Error verificando autenticación:', error);
         setUser(null);
       }
     };
     checkAuth();
   }, []);
 
-  // Función para iniciar sesión
   const login = async (username, password) => {
     try {
       const response = await axios.post(
-        'http://localhost:3000/login',
+        'https://clasificador.aduanero.com.ec/apiv1/auth/login',
         { username, password },
         { withCredentials: true }
       );
-      setUser(response.data.user);
+      if (response.data.profile) {
+        setUser(response.data.profile);
+      } else {
+        throw new Error('No se recibió información del usuario');
+      }
     } catch (error) {
       throw new Error(error.response?.data?.error || 'Error al iniciar sesión');
     }
@@ -41,7 +47,7 @@ export const AuthProvider = ({ children }) => {
   // Función para registrar un nuevo usuario
   const register = async (username, password) => {
     try {
-      const response = await axios.post('http://localhost:3000/register', {
+      const response = await axios.post('https://clasificador.aduanero.com.ec/apiv1/auth/register', {
         username,
         password,
       });
@@ -54,7 +60,7 @@ export const AuthProvider = ({ children }) => {
   // Función para cerrar sesión
   const logout = async () => {
     try {
-      await axios.get('http://localhost:3000/logout', { withCredentials: true });
+      await axios.get('https://clasificador.aduanero.com.ec/apiv1/auth/logout', { withCredentials: true });
       setUser(null);
     } catch (error) {
       throw new Error(error.response?.data?.error || 'Error al cerrar sesión');

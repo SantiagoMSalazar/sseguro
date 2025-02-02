@@ -19,24 +19,37 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100 text-black">
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-md text-black">
-        <h2 className="text-2xl mb-4">Iniciar Sesión</h2>
-        <input
-          type="text"
-          placeholder="Usuario"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="block w-full p-2 mb-4 border rounded"
-        />
-        <input
-          type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="block w-full p-2 mb-4 border rounded"
-        />
-        <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-[#1C1C1C] text-white">
+      <div className='text-center'> 
+      <h1 className='font-bold text-3xl'>Bienvenido al Registro de notas</h1>
+      <p>Nuestra prioridad es tu seguridad</p>
+      </div>
+      <form onSubmit={handleSubmit} className="bg-[#2C2C2C] p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h2 className="text-2xl font-bold mb-6 text-center">Iniciar Sesión</h2>
+        <div className="mb-6">
+          <label className="block text-sm font-medium mb-2">Usuario</label>
+          <input
+            type="text"
+            placeholder="Usuario"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="w-full bg-transparent border-b border-gray-700 py-2 text-white focus:outline-none"
+          />
+        </div>
+        <div className="mb-6">
+          <label className="block text-sm font-medium mb-2">Contraseña</label>
+          <input
+            type="password"
+            placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full bg-transparent border-b border-gray-700 py-2 text-white focus:outline-none"
+          />
+        </div>
+        <button 
+          type="submit" 
+          className="w-full bg-cyan-800 text-white py-2 rounded hover:bg-blue-700 transition-colors"
+        >
           Iniciar Sesión
         </button>
       </form>

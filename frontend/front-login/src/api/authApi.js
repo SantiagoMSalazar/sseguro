@@ -1,7 +1,7 @@
-const API_URL = "localhost:3000";
+const API_URL = "https://clasificador.aduanero.com.ec/apiv1/";
 
 export const login = async (username, password) => {
-  const response = await fetch(`${API_URL}/login`, {
+  const response = await fetch(`${API_URL}/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, password }),
