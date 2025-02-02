@@ -7,15 +7,15 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
+  // Verificar autenticación al cargar la aplicación
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await axios.get('http://82.197.66.199:5009', {
+        const response = await axios.get('http://localhost:3000/protected', {
           withCredentials: true,
         });
-        if (response.data.profile) {
-          setUser(response.data.profile);
-          console.log('Usuario autenticado:', response.data.profile.roles);
+        if (response.data) {
+          setUser(response.data); // El endpoint /protected devuelve el nombre del usuario
         } else {
           setUser(null);
         }
@@ -27,49 +27,41 @@ export const AuthProvider = ({ children }) => {
     checkAuth();
   }, []);
 
-  const login = async (username, password) => {
+  // Función para iniciar sesión
+  const login = async (email, password) => {
     try {
       const response = await axios.post(
-        'http://82.197.66.199:5009/auth/login',
-        { email:username, password },
+        'http://localhost:3000/login',
+        { email, password },
         { withCredentials: true }
       );
-      if (response.data.profile) {
-        setUser(response.data.profile);
+      if (response.data.user) {
+        setUser(response.data.user); // Actualiza el estado del usuario
       } else {
         throw new Error('No se recibió información del usuario');
       }
     } catch (error) {
-      throw new Error(error.response?.data?.error || 'Error al iniciar sesión'+error);
+      throw new Error(error.response?.data?.error || 'Error al iniciar sesión');
     }
   };
 
   // Función para registrar un nuevo usuario
-  const register = async ( userData ) => {
+  const register = async (userData) => {
     try {
-      const response = await axios.post('http://82.197.66.199:5009/user/users', {
-        nombre: userData.fullName,
-        email: userData.username, // correo electrónico
-        password: userData.password,
-        cedula: userData.cedula,
-        telefono: userData.telefono,
-        direccion: userData.direccion,
-        fecha_nacimiento: userData.fechaNacimiento,
-        ocupacion: userData.ocupacion,
-
-        /*
-      "email": "test2@epn.edu.ec",
-      "password": "Te2t123!",
-      "nombre": "Tetst User", 
-      "cedula": "0412345679",
-      "telefono": "0998765433",
-      "direccion": "Av. Test",
-      "fecha_nacimiento": "1990-05-16",
-      "ocupacion": "User",
-        */
-
-      });
-      return response.data;
+      const response = await axios.post(
+        'http://localhost:3000/register',
+        {
+          nombre: userData.fullName,
+          email: userData.username,
+          password: userData.password,
+          cedula: userData.cedula,
+          telefono: userData.telefono,
+          direccion: userData.direccion,
+          fecha_nacimiento: userData.fechaNacimiento,
+        },
+        { withCredentials: true }
+      );
+      return response.data; // Devuelve la respuesta del servidor
     } catch (error) {
       throw new Error(error.response?.data?.error || 'Error al registrar');
     }
@@ -78,8 +70,8 @@ export const AuthProvider = ({ children }) => {
   // Función para cerrar sesión
   const logout = async () => {
     try {
-      await axios.get('https://clasificador.aduanero.com.ec/apiv1/auth/logout', { withCredentials: true });
-      setUser(null);
+      await axios.get('http://localhost:3000/logout', { withCredentials: true });
+      setUser(null); // Limpia el estado del usuario
     } catch (error) {
       throw new Error(error.response?.data?.error || 'Error al cerrar sesión');
     }

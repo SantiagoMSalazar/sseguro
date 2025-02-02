@@ -6,19 +6,21 @@ import jwt from 'jsonwebtoken'
 import cors from 'cors'
 
 const app = express()
-// cors
+
+// Configuración de CORS
 app.use(
   cors({
     origin: 'http://localhost:5173',
     credentials: true
   })
 )
-// middleware
+
+// Middleware
 app.use(express.json())
 app.use(cookieParser())
 
-// middleware para validar token
-const auntenticateToken = (req, res, next) => {
+// Middleware para validar token
+const authenticateToken = (req, res, next) => {
   const token = req.cookies.access_token
   if (!token) return res.status(401).json({ error: 'Acceso no autorizado' })
   jwt.verify(token, SECRET_JWT_KEY, (err, user) => {
@@ -28,17 +30,19 @@ const auntenticateToken = (req, res, next) => {
   })
 }
 
-// crear endpoints
+// Endpoints
 
 app.get('/', (req, res) => {
   res.send('Hello World')
 })
+
+// Login
 app.post('/login', async (req, res) => {
-  const { username, password } = req.body
+  const { email, password } = req.body
   try {
-    const user = await UserRepository.login({ username, password })
+    const user = await UserRepository.login({ email, password })
     const token = jwt.sign(
-      { id: user.id, username: user.username, rol: user.rol },
+      { id: user.id, nombre: user.nombre, email: user.email },
       SECRET_JWT_KEY,
       {
         expiresIn: '1h'
@@ -49,30 +53,47 @@ app.post('/login', async (req, res) => {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',
-        maxAge: 1000 * 60 * 60
+        maxAge: 1000 * 60 * 60 // 1 hora
       })
       .status(200)
-      .send({ user, token })
+      .json({ user, token })
   } catch (error) {
     res.status(400).json({ error: error.message })
   }
 })
+
+// Registro
 app.post('/register', async (req, res) => {
-  const { username, password } = req.body
+  // eslint-disable-next-line camelcase
+  const { nombre, email, password, cedula, telefono, direccion, fecha_nacimiento } = req.body
   try {
-    const user = await UserRepository.create({ username, password })
-    res.status(201).json(user)
+    const userId = await UserRepository.create({
+      nombre,
+      email,
+      password,
+      cedula,
+      telefono,
+      direccion,
+      // eslint-disable-next-line camelcase
+      fecha_nacimiento
+    })
+    res.status(201).json({ id: userId, message: 'Usuario registrado exitosamente' })
   } catch (error) {
     res.status(400).json({ error: error.message })
   }
 })
+
+// Logout
 app.get('/logout', (req, res) => {
   res.clearCookie('access_token').send('Logged out')
 })
-app.get('/protected', auntenticateToken, (req, res) => {
-  res.send(`Bienvenido ${req.user.username}`)
+
+// Ruta protegida
+app.get('/protected', authenticateToken, (req, res) => {
+  res.send(`Bienvenido ${req.user.nombre}`)
 })
 
+// Iniciar servidor
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`)
 })
