@@ -186,6 +186,17 @@ const RegisterPage = () => {
       </div>
 
       <div>
+        <input type="text"
+        name='ocupacion'
+        placeholder='Ocupación'
+        value={formData.ocupacion}
+        onChange={handleChange}
+        className={`w-full px-4 py-2 bg-[#1C1C1C] text-white border ${
+          errors.ocupacion ? 'border-red-500' : 'border-gray-700'
+        } rounded-md focus:outline-none focus:ring-2 focus:ring-[#0D4E2C] focus:border-transparent placeholder-gray-400`}        
+        />
+      </div>
+      <div>
         <input 
           type="date"
           name="fechaNacimiento"

@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await axios.get('https://clasificador.aduanero.com.ec/apiv1/', {
+        const response = await axios.get('http://82.197.66.199:5009', {
           withCredentials: true,
         });
         if (response.data.profile) {
@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (username, password) => {
     try {
       const response = await axios.post(
-        'https://clasificador.aduanero.com.ec/apiv1/auth/login',
+        'http://82.197.66.199:5009',
         { username, password },
         { withCredentials: true }
       );
@@ -47,15 +47,26 @@ export const AuthProvider = ({ children }) => {
   // Función para registrar un nuevo usuario
   const register = async ( userData ) => {
     try {
-      const response = await axios.post('https://clasificador.aduanero.com.ec/apiv1/auth/register', {
-        fullName: userData.fullName,
-        username: userData.username, // correo electrónico
+      const response = await axios.post('http://82.197.66.199:5009/user/users', {
+        nombre: userData.fullName,
+        email: userData.username, // correo electrónico
         password: userData.password,
         cedula: userData.cedula,
         telefono: userData.telefono,
         direccion: userData.direccion,
-        fechaNacimiento: userData.fechaNacimiento,
-        genero: userData.genero
+        fecha_nacimiento: userData.fechaNacimiento,
+        ocupacion: 'user',
+
+        /*
+      "email": "test2@epn.edu.ec",
+      "password": "Te2t123!",
+      "nombre": "Tetst User", 
+      "cedula": "0412345679",
+      "telefono": "0998765433",
+      "direccion": "Av. Test",
+      "fecha_nacimiento": "1990-05-16",
+      "ocupacion": "User",
+        */
 
       });
       return response.data;
