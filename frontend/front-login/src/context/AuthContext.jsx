@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await axios.get('http://82.197.66.199:5009', {
+        const response = await axios.get('http://62.146.231.104:5009', {
           withCredentials: true,
         });
         if (response.data.profile) {
@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (username, password) => {
     try {
       const response = await axios.post(
-        'http://82.197.66.199:5009/auth/login',
+        'http://62.146.231.104:5009/auth/login',
         { email:username, password },
         { withCredentials: true }
       );
@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }) => {
   // Función para registrar un nuevo usuario
   const register = async ( userData ) => {
     try {
-      const response = await axios.post('http://82.197.66.199:5009/user/users', {
+      const response = await axios.post('http://62.146.231.104:5009/user/users', {
         nombre: userData.fullName,
         email: userData.username, // correo electrónico
         password: userData.password,
@@ -71,7 +71,7 @@ export const AuthProvider = ({ children }) => {
       });
       return response.data;
     } catch (error) {
-      throw new Error(error.response?.data?.error || 'Error al registrar');
+      throw new Error(error.response?.data?.error || 'Error al registrar: '+error);
     }
   };
 
