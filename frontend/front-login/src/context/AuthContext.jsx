@@ -45,11 +45,18 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Función para registrar un nuevo usuario
-  const register = async (username, password) => {
+  const register = async ( userData ) => {
     try {
       const response = await axios.post('https://clasificador.aduanero.com.ec/apiv1/auth/register', {
-        username,
-        password,
+        fullName: userData.fullName,
+        username: userData.username, // correo electrónico
+        password: userData.password,
+        cedula: userData.cedula,
+        telefono: userData.telefono,
+        direccion: userData.direccion,
+        fechaNacimiento: userData.fechaNacimiento,
+        genero: userData.genero
+
       });
       return response.data;
     } catch (error) {
