@@ -7,6 +7,9 @@ import ConfigPage from "../pages/ConfigPage";
 import ProfileCard from "../pages/ProfileCard";
 import UpdateProfile from "../pages/UpdateProfile";
 import LopdpPermissions from "../pages/LopdpPermissions";
+import Lopdp from "../pages/Lopdp";
+import NotesGrid from "../pages/NotesGrid";
+import NoteEditor from "../pages/NoteEditor";
 import { AuthProvider } from "../context/AuthContext";
 
 const AppRouter = () => {
@@ -25,7 +28,10 @@ const AppRouter = () => {
         <Route path="/profile" element={<ProfileCard />} />
         <Route path="/config" element={<ConfigPage />} />
         <Route path="/update-profile" element={<UpdateProfile />} />
+        <Route path="/lopdp" element={<Lopdp />} />
         <Route path="/lopdp-permissions" element={<LopdpPermissions />} />
+        <Route path="/notes" element={<NotesGrid />} />
+        <Route path="/notes/new" element={<NoteEditor />} />
         
       </Routes>
       </AuthProvider>
