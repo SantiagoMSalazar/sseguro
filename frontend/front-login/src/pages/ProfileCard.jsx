@@ -28,7 +28,6 @@ const ProfileCard = () => {
       <nav className="flex justify-between px-4 py-3 text-sm border-b border-gray-800">
         <div className="flex justify-between w-full">
           <span className="cursor-pointer hover:text-gray-300">Inicio</span>
-          <span className="cursor-pointer hover:text-gray-300">Mis Notas</span>
           <span 
             className="cursor-pointer hover:text-gray-300"
             onClick={() => navigate('/config')}
