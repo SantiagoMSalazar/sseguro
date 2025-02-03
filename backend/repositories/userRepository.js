@@ -1,31 +1,57 @@
-// repositories/UserRepository.js
 import User from '../models/User.js'
 import bcrypt from 'bcrypt'
 
 export class UserRepository {
-  static async create ({ username, password }) {
+  // eslint-disable-next-line camelcase
+  static async create ({ nombre, email, password, cedula, telefono, direccion, fecha_nacimiento }) {
     // Validaciones
-    Validations.username(username)
+    Validations.nombre(nombre)
+    Validations.email(email)
     Validations.password(password)
+    Validations.cedula(cedula)
+    Validations.telefono(telefono)
+    Validations.direccion(direccion)
+    Validations.fecha_nacimiento(fecha_nacimiento)
 
-    let user = await User.findOne({ where: { username } })
-    if (user) throw new Error('Usuario existente en e sistema')
+    // Verificar si el usuario ya existe
+    let user = await User.findOne({ where: { email } })
+    if (user) throw new Error('El correo electrónico ya está registrado en el sistema')
+
     // Encriptar contraseña
     const hashedPassword = await bcrypt.hash(password, 10)
+
     // Crear usuario en PostgreSQL
     user = await User.create({
-      username,
-      password: hashedPassword
+      nombre,
+      email,
+      password: hashedPassword,
+      cedula,
+      telefono,
+      direccion,
+      // eslint-disable-next-line camelcase
+      fecha_nacimiento
     })
+
     return user.id
   }
 
-  static async login ({ username, password }) {
+  static async findById (id) {
+    try {
+      const user = await User.findOne({ where: { id } }) // Busca al usuario por ID
+      if (!user) throw new Error('Usuario no encontrado')
+      return user
+    } catch (error) {
+      throw new Error(error.message)
+    }
+  }
+
+  static async login ({ email, password }) {
     // Validaciones
-    Validations.username(username)
+    Validations.email(email)
     Validations.password(password)
+
     // Buscar usuario
-    const user = await User.findOne({ where: { username } })
+    const user = await User.findOne({ where: { email } })
     if (!user) throw new Error('Usuario no encontrado')
 
     // Validar contraseña
@@ -34,20 +60,51 @@ export class UserRepository {
 
     return {
       id: user.id,
-      username: user.username,
-      rol: user.rol
+      nombre: user.nombre,
+      email: user.email
     }
   }
 }
 
 class Validations {
-  static username (username) {
-    if (typeof username !== 'string') throw new Error('Username must be a string')
-    if (username.length < 3) throw new Error('Username must be at least 3 characters long')
+  static nombre (nombre) {
+    if (typeof nombre !== 'string') throw new Error('El nombre debe ser una cadena de texto')
+    if (nombre.length < 3) throw new Error('El nombre debe tener al menos 3 caracteres')
+  }
+
+  static email (email) {
+    if (typeof email !== 'string') throw new Error('El correo electrónico debe ser una cadena de texto')
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error('El correo electrónico no es válido')
   }
 
   static password (password) {
-    if (typeof password !== 'string') throw new Error('Password must be a string')
-    if (password.length < 8) throw new Error('Password must be at least 8 characters long')
+    if (typeof password !== 'string') throw new Error('La contraseña debe ser una cadena de texto')
+    if (password.length < 8) throw new Error('La contraseña debe tener al menos 8 caracteres')
+  }
+
+  static cedula (cedula) {
+    if (typeof cedula !== 'string') throw new Error('La cédula debe ser una cadena de texto')
+    if (cedula.length !== 10) throw new Error('La cédula debe tener 10 caracteres')
+  }
+
+  static telefono (telefono) {
+    if (typeof telefono !== 'string') throw new Error('El teléfono debe ser una cadena de texto')
+    if (telefono.length !== 10) throw new Error('El teléfono debe tener 10 caracteres')
+  }
+
+  static direccion (direccion) {
+    if (typeof direccion !== 'string') throw new Error('La dirección debe ser una cadena de texto')
+    if (direccion.length < 5) throw new Error('La dirección debe tener al menos 5 caracteres')
+  }
+
+  // eslint-disable-next-line space-before-function-paren
+  // eslint-disable-next-line camelcase
+  static fecha_nacimiento (fecha_nacimiento) {
+    const date = new Date(fecha_nacimiento)
+    // eslint-disable-next-line camelcase
+    if (!(date instanceof Date) || isNaN(date)) {
+      // eslint-disable-next-line camelcase
+      throw new Error('La fecha de nacimiento debe ser una fecha válida' + fecha_nacimiento)
+    }
   }
 }

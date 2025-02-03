@@ -7,17 +7,20 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  // Verificar si el usuario está autenticado al cargar la aplicación
+  // Verificar autenticación al cargar la aplicación
   useEffect(() => {
     const checkAuth = async () => {
       try {
         const response = await axios.get('http://localhost:3000/protected', {
           withCredentials: true,
         });
-        setUser(response.data.user);
-        console.log(response.data.user.rol);
-      // eslint-disable-next-line no-unused-vars
+        if (response.data) {
+          setUser(response.data); // El endpoint /protected devuelve el nombre del usuario
+        } else {
+          setUser(null);
+        }
       } catch (error) {
+        console.error('Error verificando autenticación:', error);
         setUser(null);
       }
     };
@@ -25,29 +28,57 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   // Función para iniciar sesión
-  const login = async (username, password) => {
+  const login = async (email, password) => {
     try {
       const response = await axios.post(
         'http://localhost:3000/login',
-        { username, password },
+        { email, password },
         { withCredentials: true }
       );
-      setUser(response.data.user);
+      if (response.data.user) {
+        await fetchProfile() // Actualiza el estado del usuario
+      } else {
+        throw new Error('No se recibió información del usuario');
+      }
     } catch (error) {
       throw new Error(error.response?.data?.error || 'Error al iniciar sesión');
     }
   };
 
   // Función para registrar un nuevo usuario
-  const register = async (username, password) => {
+  const register = async (userData) => {
     try {
-      const response = await axios.post('http://localhost:3000/register', {
-        username,
-        password,
-      });
-      return response.data;
+      const response = await axios.post(
+        'http://localhost:3000/register',
+        {
+          nombre: userData.fullName,
+          email: userData.username,
+          password: userData.password,
+          cedula: userData.cedula,
+          telefono: userData.telefono,
+          direccion: userData.direccion,
+          fecha_nacimiento: userData.fechaNacimiento,
+        },
+        { withCredentials: true }
+      );
+      await fetchProfile(); // Actualiza el estado del usuario
+      return response.data; // Devuelve la respuesta del servidor
     } catch (error) {
       throw new Error(error.response?.data?.error || 'Error al registrar');
+    }
+  };
+
+  const fetchProfile = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/profile', {
+        withCredentials: true
+      });
+      setUser(response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Error obteniendo perfil:', error);
+      setUser(null);
+      throw error;
     }
   };
 
@@ -55,14 +86,14 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       await axios.get('http://localhost:3000/logout', { withCredentials: true });
-      setUser(null);
+      setUser(null); // Limpia el estado del usuario
     } catch (error) {
       throw new Error(error.response?.data?.error || 'Error al cerrar sesión');
     }
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout }}>
+    <AuthContext.Provider value={{ user, login, register, logout, fetchProfile }}>
       {children}
     </AuthContext.Provider>
   );

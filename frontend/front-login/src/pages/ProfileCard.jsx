@@ -1,7 +1,26 @@
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useAuth } from '../context/AuthContext';
 
 const ProfileCard = () => {
   const navigate = useNavigate();
+  const { user } = useAuth(); // Obtiene los datos del usuario del context
+  const [edad, setEdad] = useState(0);
+
+  useEffect(() => {
+    if (user && user.fecha_nacimiento) {
+      // Calcula la edad
+      const fechaNacimiento = new Date(user.fecha_nacimiento);
+      const hoy = new Date();
+      const edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+      const mes = hoy.getMonth() - fechaNacimiento.getMonth();
+      if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNacimiento.getDate())) {
+        setEdad(edad - 1);
+      } else {
+        setEdad(edad);
+      }
+    }
+  }, [user]);
 
   return (
     <div className="min-h-screen bg-[#1C1C1C] text-white">
@@ -29,7 +48,6 @@ const ProfileCard = () => {
       {/* Main Content */}
       <div className="max-w-5xl mx-auto px-8">
         <div className="flex justify-between items-start">
-          {/* Left Side */}
           <div className="w-2/3">
             <h2 className="text-2xl mb-8">Bienvenido</h2>
             
@@ -39,19 +57,21 @@ const ProfileCard = () => {
                 <div className="space-y-4">
                   <div>
                     <label className="text-gray-400 text-sm">Nombres</label>
-                    <div className="border-b border-gray-700 py-1">{/* Datos del backend */}</div>
-                  </div>
-                  <div>
-                    <label className="text-gray-400 text-sm">Apellido</label>
-                    <div className="border-b border-gray-700 py-1">{/* Datos del backend */}</div>
+                    <div className="border-b border-gray-700 py-1">
+                      {user?.nombre || 'No disponible'}
+                    </div>
                   </div>
                   <div>
                     <label className="text-gray-400 text-sm">Cédula</label>
-                    <div className="border-b border-gray-700 py-1">{/* Datos del backend */}</div>
+                    <div className="border-b border-gray-700 py-1">
+                      {user?.cedula || 'No disponible'}
+                    </div>
                   </div>
                   <div>
                     <label className="text-gray-400 text-sm">Edad</label>
-                    <div className="border-b border-gray-700 py-1">{/* Datos del backend */}</div>
+                    <div className="border-b border-gray-700 py-1">
+                      {edad} años
+                    </div>
                   </div>
                 </div>
               </section>
@@ -61,19 +81,21 @@ const ProfileCard = () => {
                 <div className="space-y-4">
                   <div>
                     <label className="text-gray-400 text-sm">Dirección</label>
-                    <div className="border-b border-gray-700 py-1">{/* Datos del backend */}</div>
+                    <div className="border-b border-gray-700 py-1">
+                      {user?.direccion || 'No disponible'}
+                    </div>
                   </div>
                   <div>
                     <label className="text-gray-400 text-sm">Correo</label>
-                    <div className="border-b border-gray-700 py-1">{/* Datos del backend */}</div>
+                    <div className="border-b border-gray-700 py-1">
+                      {user?.email || 'No disponible'}
+                    </div>
                   </div>
                   <div>
                     <label className="text-gray-400 text-sm">Teléfono</label>
-                    <div className="border-b border-gray-700 py-1">{/* Datos del backend */}</div>
-                  </div>
-                  <div>
-                    <label className="text-gray-400 text-sm">Contacto de emergencia</label>
-                    <div className="border-b border-gray-700 py-1">{/* Datos del backend */}</div>
+                    <div className="border-b border-gray-700 py-1">
+                      {user?.telefono || 'No disponible'}
+                    </div>
                   </div>
                 </div>
               </section>
