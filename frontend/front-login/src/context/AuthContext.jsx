@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
         { withCredentials: true }
       );
       if (response.data.user) {
-        setUser(response.data.user); // Actualiza el estado del usuario
+        await fetchProfile() // Actualiza el estado del usuario
       } else {
         throw new Error('No se recibió información del usuario');
       }
@@ -61,6 +61,7 @@ export const AuthProvider = ({ children }) => {
         },
         { withCredentials: true }
       );
+      await fetchProfile(); // Actualiza el estado del usuario
       return response.data; // Devuelve la respuesta del servidor
     } catch (error) {
       throw new Error(error.response?.data?.error || 'Error al registrar');

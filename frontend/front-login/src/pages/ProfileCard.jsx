@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 
 const ProfileCard = () => {
   const navigate = useNavigate();
-  const { user } = useContext(useAuth); // Obtiene los datos del usuario del context
+  const { user } = useAuth(); // Obtiene los datos del usuario del context
   const [edad, setEdad] = useState(0);
 
   useEffect(() => {
