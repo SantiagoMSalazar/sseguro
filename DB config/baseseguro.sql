@@ -10,11 +10,13 @@ CREATE TABLE Users (
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW()
 );
+ALTER TABLE Users add column rol varchar(10)
+ALTER TABLE Users ALTER COLUMN rol SET DEFAULT 'usuario';
+
+
 
 select * from users
 
-ALTER TABLE Users add column rol varchar(10)
-         }
 CREATE TABLE User_Permissions (
   user_id UUID REFERENCES Users(id) ON DELETE CASCADE,
   field_name TEXT CHECK (field_name IN (
@@ -64,34 +66,6 @@ $$ LANGUAGE plpgsql;
 SELECT update_user_permission('9bd0314d-ebab-42f4-b5c7-30c21d36e6be', 'email', TRUE);
 
 -- Crear la vista
-
-CREATE VIEW public_users AS
-SELECT
-    u.id,
-    COALESCE(MAX(CASE WHEN p.field_name = 'nombre' AND p.is_visible THEN u.nombre ELSE 'Anonimizado' END), 'Anonimizado') AS nombre,
-    COALESCE(MAX(CASE WHEN p.field_name = 'email' AND p.is_visible THEN u.email ELSE 'anonimizado@email.com' END), 'anonimizado@email.com') AS email,
-    COALESCE(MAX(CASE WHEN p.field_name = 'cedula' AND p.is_visible THEN u.cedula ELSE 'XXXXXXXXXX' END), 'XXXXXXXXXX') AS cedula,
-    COALESCE(MAX(CASE WHEN p.field_name = 'telefono' AND p.is_visible THEN u.telefono ELSE '0000000000' END), '0000000000') AS telefono,
-    COALESCE(MAX(CASE WHEN p.field_name = 'direccion' AND p.is_visible THEN u.direccion ELSE 'Dirección Oculta' END), 'Dirección Oculta') AS direccion,
-    COALESCE(MAX(CASE WHEN p.field_name = 'fecha_nacimiento' AND p.is_visible THEN u.fecha_nacimiento ELSE NULL END), NULL) AS fecha_nacimiento,
-    COALESCE(MAX(CASE WHEN p.field_name = 'rol' AND p.is_visible THEN u.rol ELSE 'No Disponible' END), 'No Disponible') AS rol
-FROM Users u
-LEFT JOIN User_Permissions p ON u.id = p.user_id
-GROUP BY u.id;
-
-
-SELECT * FROM public_users;
-
-SELECT
-    u.id, u.cedula, p.is_visible
-FROM Users u
-LEFT JOIN User_Permissions p
-    ON u.id = p.user_id
-    AND p.field_name = 'cedula'
-WHERE u.id = '50813483-f74e-4c98-999b-e92e090cd8b4';
-
-DROP VIEW IF EXISTS public_users;
-
 
 CREATE OR REPLACE VIEW public_users AS
 SELECT
