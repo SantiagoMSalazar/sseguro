@@ -1,5 +1,6 @@
 // src/components/ConsentContracts.jsx
 import { useState } from 'react';
+import Header from '../components/Home/HeaderComponent';
 import { useNavigate } from 'react-router-dom';
 
 const ConsentContracts = () => {
@@ -60,34 +61,7 @@ const ConsentContracts = () => {
   return (
     <div className="min-h-screen bg-[#1C1C1C] text-white">
       {/* Header Nav */}
-      <nav className="flex justify-between px-4 py-3 text-sm border-b border-gray-800">
-        <div className="flex justify-between w-full">
-          <span 
-            className="cursor-pointer hover:text-gray-300"
-            onClick={() => navigate('/notes')}
-          >
-            Mis Notas
-          </span>
-          <span 
-            className="cursor-pointer hover:text-gray-300"
-            onClick={() => navigate('/config')}
-          >
-            Configuración
-          </span>
-          <span 
-            className="cursor-pointer hover:text-gray-300"
-            onClick={() => navigate('/consents')}
-          >
-            Consentimientos
-          </span>
-          <img
-            onClick={() => navigate('/profile')}
-            src="/path-to-profile-image.jpg"
-            alt="Profile"
-            className="w-8 h-8 rounded-full cursor-pointer object-cover"
-          />
-        </div>
-      </nav>
+      <Header />
 
       {/* Logo */}
       <div className="px-8 py-4">

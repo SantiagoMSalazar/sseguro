@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Header from '../components/Home/HeaderComponent';
 import { useNavigate } from 'react-router-dom';
 
 const ConsentForm = () => {
@@ -12,19 +13,7 @@ const ConsentForm = () => {
   return (
     <div className="min-h-screen bg-[#1C1C1C] text-white">
       {/* Header */}
-      <nav className="flex justify-between px-8 py-3 text-sm border-b border-gray-800">
-        <div className="flex justify-between w-full ps-5">
-          <span className="cursor-pointer hover:text-gray-300">Mis Notas</span>
-          <span
-            className="cursor-pointer hover:text-gray-300"
-            onClick={() => navigate('/config')}
-          >
-            Configuración
-          </span>
-          <span className="cursor-pointer hover:text-gray-300">Soporte y documentación</span>
-          <div className="w-6 h-6 rounded-full bg-gray-700 cursor-pointer"></div>
-        </div>
-      </nav>
+      <Header />
 
       {/* Logo */}
       <div className="px-8 py-4">
@@ -75,9 +64,9 @@ const ConsentForm = () => {
               <section className="border-t border-gray-700 pt-4 mt-6">
                 <p className="text-sm text-center">Para más información o consultas, contacte a:</p>
                 <div className="text-sm text-center">
-                  <p>📩 Correo electrónico: [correo de contacto]</p>
-                  <p>📞 Teléfono: [número de contacto]</p>
-                  <p>📍 Dirección: [dirección del responsable]</p>
+                  <p>📩 Correo electrónico: santiago.salazar@professional.com</p>
+                  <p>📞 Teléfono: 0998745685</p>
+                  <p>📍 Dirección: Argelia, Quito</p>
                 </div>
               </section>
             </div>
