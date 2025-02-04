@@ -44,6 +44,7 @@ router.post('/register', async (req, res) => {
     })
     res.status(201).json({ id: userId, message: 'Usuario registrado exitosamente' })
   } catch (error) {
+    // console.log(error)
     res.status(400).json({ error: error.message })
   }
 })

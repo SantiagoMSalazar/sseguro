@@ -1,5 +1,6 @@
 import User from '../models/User.js'
 import bcrypt from 'bcrypt'
+import UserPermission from '../models/UserPermissions.js'
 
 export class UserRepository {
   // eslint-disable-next-line camelcase
@@ -64,6 +65,60 @@ export class UserRepository {
       email: user.email
     }
   }
+
+  static async updatePermisions (userId, fieldName, isVisible) {
+    await UserPermission.upsert({
+      user_id: userId,
+      field_name: fieldName,
+      is_visible: isVisible
+    })
+  }
+
+  static async getUserPermissions (userId) {
+    const permissions = await UserPermission.findAll({
+      where: { user_id: userId },
+      attributes: ['field_name', 'is_visible'],
+      raw: true
+    })
+    // eslint-disable-next-line camelcase
+    return permissions.reduce((acc, { field_name, is_visible }) => {
+      // eslint-disable-next-line camelcase
+      acc[field_name] = is_visible
+      return acc
+    }, {})
+  }
+
+  static async getPublicUsers () {
+    try {
+      const users = await User.findAll({
+        include: [{
+          model: UserPermission,
+          as: 'permissions',
+          attributes: ['field_name', 'is_visible']
+        }]
+      })
+
+      return users.map(user => {
+        const permissions = user.permissions.reduce((acc, perm) => {
+          acc[perm.field_name] = perm.is_visible
+          return acc
+        }, {})
+
+        return {
+          id: user.id,
+          nombre: permissions.nombre ? user.nombre : 'Anonimizado',
+          email: permissions.email ? user.email : 'anonimizado@email.com',
+          cedula: permissions.cedula ? user.cedula : 'XXXXXXXXXX',
+          telefono: permissions.telefono ? user.telefono : '0000000000',
+          direccion: permissions.direccion ? user.direccion : 'Dirección Oculta',
+          fecha_nacimiento: permissions.fecha_nacimiento ? user.fecha_nacimiento : null,
+          rol: permissions.rol ? user.rol : 'No Disponible'
+        }
+      })
+    } catch (error) {
+      throw new Error(`Error obteniendo usuarios públicos: ${error.message}`)
+    }
+  }
 }
 
 class Validations {
@@ -73,7 +128,7 @@ class Validations {
   }
 
   static email (email) {
-    if (typeof email !== 'string') throw new Error('El correo electrónico debe ser una cadena de texto')
+    if (typeof email !== 'string') throw new Error('El correo electrónico debe ser una cadena de texto, valor actual: ' + typeof (email))
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error('El correo electrónico no es válido')
   }
 

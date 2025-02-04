@@ -53,5 +53,11 @@ const User = sequelize.define('User', {
     }
   }
 })
+User.associate = models => {
+  User.hasMany(models.UserPermission, {
+    foreignKey: 'user_id',
+    as: 'permissions'
+  })
+}
 
 export default User

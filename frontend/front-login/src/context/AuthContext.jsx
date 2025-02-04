@@ -62,16 +62,16 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = async (userData) => {
+    console.log(userData);
     const { data } = await axios.post('/auth/register', {
       nombre: userData.fullName,
-      email: userData.email,
+      email: userData.username,
       password: userData.password,
       cedula: userData.cedula,
       telefono: userData.telefono,
       direccion: userData.direccion,
       fecha_nacimiento: userData.fechaNacimiento,
     });
-    await fetchProfile(); // Autologin después de registro
     return data;
   };
 

@@ -126,6 +126,7 @@ import cookieParser from 'cookie-parser'
 import { corsConfig } from './middlewares/cors.js'
 import authRoutes from './routes/auth.routes.js'
 import userRoutes from './routes/user.routes.js'
+import adminRoutes from './routes/admin.routes.js'
 
 const app = express()
 
@@ -137,6 +138,7 @@ app.use(cookieParser())
 // Rutas
 app.use('/auth', authRoutes)
 app.use('/users', userRoutes)
+app.use('/admin', adminRoutes)
 
 // Ruta de prueba básica
 app.get('/', (req, res) => {
