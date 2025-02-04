@@ -52,4 +52,46 @@ router.put('/permissions', authenticateToken, async (req, res) => {
   }
 })
 
+router.put('/profile', authenticateToken, async (req, res) => {
+  const userId = req.user.id // ID del usuario autenticado
+  const {
+    nombre,
+    email,
+    password,
+    cedula,
+    telefono,
+    direccion,
+    // eslint-disable-next-line camelcase
+    fecha_nacimiento,
+    genero,
+    ocupacion
+  } = req.body
+
+  try {
+    // Validar que el usuario exista
+    const user = await UserRepository.findById(userId)
+    if (!user) {
+      return res.status(404).json({ error: 'Usuario no encontrado' })
+    }
+
+    // Actualizar los datos
+    const updatedUser = await UserRepository.updateProfile(userId, {
+      nombre,
+      email,
+      password,
+      cedula,
+      telefono,
+      direccion,
+      // eslint-disable-next-line camelcase
+      fecha_nacimiento,
+      genero,
+      ocupacion
+    })
+
+    res.status(200).json(updatedUser)
+  } catch (error) {
+    res.status(400).json({ error: error.message })
+  }
+})
+
 export default router

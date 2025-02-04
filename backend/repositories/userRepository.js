@@ -124,6 +124,65 @@ export class UserRepository {
       throw new Error(`Error obteniendo usuarios públicos: ${error.message}`)
     }
   }
+
+  static async updateProfile (userId, updateData) {
+    // Campos permitidos para actualización
+    const allowedFields = [
+      'nombre',
+      'email',
+      'password',
+      'cedula',
+      'telefono',
+      'direccion',
+      'fecha_nacimiento',
+      'genero',
+      'ocupacion'
+    ]
+    const filteredData = Object.keys(updateData)
+      .filter(key => allowedFields.includes(key))
+      .reduce((obj, key) => {
+        obj[key] = updateData[key]
+        return obj
+      }, {})
+    // Validaciones
+    if (filteredData.nombre) Validations.nombre(filteredData.nombre)
+    if (filteredData.email) {
+      Validations.email(filteredData.email)
+      const existingUser = await User.findOne({ where: { email: filteredData.email } })
+      if (existingUser && existingUser.id !== userId) {
+        throw new Error('El correo electrónico ya está registrado en el sistema')
+      }
+    }
+    if (filteredData.password) Validations.password(filteredData.password)
+    if (filteredData.cedula) Validations.cedula(filteredData.cedula)
+    if (filteredData.telefono) Validations.telefono(filteredData.telefono)
+    if (filteredData.direccion) Validations.direccion(filteredData.direccion)
+    if (filteredData.fecha_nacimiento) Validations.fecha_nacimiento(filteredData.fecha_nacimiento)
+    if (filteredData.genero) Validations.genero(filteredData.genero)
+    if (filteredData.ocupacion) Validations.ocupacion(filteredData.ocupacion)
+
+    if (filteredData.password) {
+      filteredData.password = await bcrypt.hash(filteredData.password, 10)
+    }
+
+    // Actualizar el usuario
+    const [updatedRows] = await User.update(filteredData, {
+      where: { id: userId },
+      returning: true, // Para devolver el usuario actualizado
+      individualHooks: true // Para ejecutar hooks (como beforeUpdate)
+    })
+
+    if (updatedRows === 0) {
+      throw new Error('No se pudo actualizar el usuario')
+    }
+
+    // Devolver el usuario actualizado (sin la contraseña)
+    const updatedUser = await User.findByPk(userId, {
+      attributes: { exclude: ['password'] }
+    })
+
+    return updatedUser
+  }
 }
 
 class Validations {
