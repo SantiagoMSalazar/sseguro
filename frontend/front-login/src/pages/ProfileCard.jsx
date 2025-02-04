@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import Header from '../components/Home/HeaderComponent';
 import { useAuth } from '../context/AuthContext';
 
 const ProfileCard = () => {
@@ -25,19 +26,7 @@ const ProfileCard = () => {
   return (
     <div className="min-h-screen bg-[#1C1C1C] text-white">
       {/* Header */}
-      <nav className="flex justify-between px-4 py-3 text-sm border-b border-gray-800">
-        <div className="flex justify-between w-full">
-          <span className="cursor-pointer hover:text-gray-300">Inicio</span>
-          <span 
-            className="cursor-pointer hover:text-gray-300"
-            onClick={() => navigate('/config')}
-          >
-            Configuración
-          </span>
-          <span className="cursor-pointer hover:text-gray-300">Soporte y documentación</span>
-          <div className="w-6 h-6 rounded-full bg-gray-700 cursor-pointer"></div>
-        </div>
-      </nav>
+      <Header/>
 
       {/* Logo */}
       <div className="px-8 py-4">
