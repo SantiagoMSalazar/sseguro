@@ -22,11 +22,12 @@ WHERE id = '50813483-f74e-4c98-999b-e92e090cd8b4';
 
 
 select * from users
+drop table User_permissions
 
 CREATE TABLE User_Permissions (
   user_id UUID REFERENCES Users(id) ON DELETE CASCADE,
   field_name TEXT CHECK (field_name IN (
-      'nombre', 'email', 'cedula', 'telefono', 'direccion', 'fecha_nacimiento', 'rol'
+      'nombre', 'email', 'cedula', 'telefono', 'direccion', 'fecha_nacimiento','ocupacion', 'genero', 'rol'
   )),
   is_visible BOOLEAN DEFAULT FALSE,
   PRIMARY KEY (user_id, field_name)
@@ -34,17 +35,18 @@ CREATE TABLE User_Permissions (
 
 
 
-select * from User_Permissions
+select * from User_Permissions;
 
+select view
 
 INSERT INTO User_Permissions (user_id, field_name, is_visible) VALUES
-    ('c91ed824-e090-47ec-80f3-184863c91500', 'nombre', TRUE),
-    ('c91ed824-e090-47ec-80f3-184863c91500', 'email', TRUE),
-    ('c91ed824-e090-47ec-80f3-184863c91500', 'cedula', FALSE),
-    ('c91ed824-e090-47ec-80f3-184863c91500', 'telefono', FALSE),
-    ('c91ed824-e090-47ec-80f3-184863c91500', 'direccion', FALSE),
-    ('c91ed824-e090-47ec-80f3-184863c91500', 'fecha_nacimiento', FALSE),
-    ('c91ed824-e090-47ec-80f3-184863c91500', 'rol', TRUE);
+    ('50813483-f74e-4c98-999b-e92e090cd8b4', 'nombre', TRUE),
+    ('50813483-f74e-4c98-999b-e92e090cd8b4', 'email', TRUE),
+    ('50813483-f74e-4c98-999b-e92e090cd8b4', 'cedula', FALSE),
+    ('50813483-f74e-4c98-999b-e92e090cd8b4', 'telefono', FALSE),
+    ('50813483-f74e-4c98-999b-e92e090cd8b4', 'direccion', FALSE),
+    ('50813483-f74e-4c98-999b-e92e090cd8b4', 'fecha_nacimiento', FALSE),
+    ('50813483-f74e-4c98-999b-e92e090cd8b4', 'rol', TRUE);
 
 INSERT INTO User_Permissions (user_id, field_name, is_visible) VALUES
     ('bf70929e-8f11-44df-865d-569953cbf217', 'nombre', TRUE),
@@ -53,6 +55,8 @@ INSERT INTO User_Permissions (user_id, field_name, is_visible) VALUES
     ('bf70929e-8f11-44df-865d-569953cbf217', 'telefono', TRUE),
     ('bf70929e-8f11-44df-865d-569953cbf217', 'direccion', TRUE),
     ('bf70929e-8f11-44df-865d-569953cbf217', 'fecha_nacimiento', TRUE),
+    ('bf70929e-8f11-44df-865d-569953cbf217', 'genero', TRUE),
+    ('bf70929e-8f11-44df-865d-569953cbf217', 'ocupacion', TRUE),
     ('bf70929e-8f11-44df-865d-569953cbf217', 'rol', TRUE);
 
 CREATE OR REPLACE FUNCTION update_user_permission(_user_id UUID, _field_name TEXT, _is_visible BOOLEAN)
@@ -69,7 +73,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-SELECT update_user_permission('9bd0314d-ebab-42f4-b5c7-30c21d36e6be', 'email', TRUE);
+SELECT update_user_permission('50813483-f74e-4c98-999b-e92e090cd8b4', 'cedula', TRUE);
 
 -- Crear la vista
 
@@ -135,6 +139,25 @@ SELECT
         ) THEN u.fecha_nacimiento
         ELSE NULL
     END AS fecha_nacimiento,
+
+        CASE
+            WHEN EXISTS (
+                SELECT 1 FROM User_Permissions p
+                WHERE p.user_id = u.id
+                  AND p.field_name = 'genero'
+                  AND p.is_visible = TRUE
+            ) THEN u.genero
+            ELSE 'No Disponible'
+        END AS genero,
+        CASE
+            WHEN EXISTS (
+                SELECT 1 FROM User_Permissions p
+                WHERE p.user_id = u.id
+                  AND p.field_name = 'ocupacion'
+                  AND p.is_visible = TRUE
+            ) THEN u.ocupacion
+            ELSE 'No Disponible'
+        END AS ocupacion,
 
     CASE
         WHEN EXISTS (

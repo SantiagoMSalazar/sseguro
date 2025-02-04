@@ -27,14 +27,26 @@ router.get('/profile', authenticateToken, async (req, res) => {
   }
 })
 
-router.put('/permisions', authenticateToken, async (req, res) => {
+router.put('/permissions', authenticateToken, async (req, res) => {
   try {
+    const { permissions } = req.body // Recibe un array de objetos
+    const allowedFields = ['nombre', 'email', 'cedula', 'telefono', 'direccion', 'genero', 'ocupacion', 'fecha_nacimiento']
+
+    if (!Array.isArray(permissions)) {
+      throw new Error('El formato de permisos debe ser un array')
+    }
+
+    // Iterar sobre los permisos recibidos y actualizarlos
     // eslint-disable-next-line camelcase
-    const { field_name, is_visible } = req.body
-    const allowedFields = ['nombre', 'email', 'cedula', 'telefono', 'direccion', 'fecha_nacimiento']
-    if (!allowedFields.includes(field_name)) throw new Error('Campo no permitido')
-    await UserRepository.updatePermisions(req.user.id, field_name, is_visible)
-    res.status(200).json({ message: 'Permisos actualizados' })
+    for (const { field_name, is_visible } of permissions) {
+      if (!allowedFields.includes(field_name)) {
+        // eslint-disable-next-line camelcase
+        throw new Error(`Campo no permitido: ${field_name}`)
+      }
+      await UserRepository.updatePermisions(req.user.id, field_name, is_visible)
+    }
+
+    res.status(200).json({ message: 'Permisos actualizados correctamente' })
   } catch (error) {
     res.status(400).json({ error: error.message })
   }
