@@ -13,6 +13,10 @@ CREATE TABLE Users (
 ALTER TABLE Users add column rol varchar(10)
 ALTER TABLE Users ALTER COLUMN rol SET DEFAULT 'usuario';
 
+UPDATE Users
+SET
+    rol = 'admin'
+WHERE id = '50813483-f74e-4c98-999b-e92e090cd8b4';
 
 
 select * from users
@@ -141,3 +145,5 @@ SELECT
     END AS rol
 
 FROM Users u;
+
+DELETE FROM users WHERE id = 'c80c231a-467a-42ad-8f23-2ff78e94ea3c'

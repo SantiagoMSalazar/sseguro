@@ -43,6 +43,11 @@ const User = sequelize.define('User', {
   updated_at: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW // Valor por defecto: fecha y hora actual
+  },
+  rol: {
+    type: DataTypes.ENUM('admin', 'usuario'), // Solo puede ser 'admin' o 'user'
+    allowNull: false,
+    defaultValue: 'usuario'
   }
 }, {
   tableName: 'users', // Nombre de la tabla en la base de datos
@@ -53,5 +58,11 @@ const User = sequelize.define('User', {
     }
   }
 })
+User.associate = models => {
+  User.hasMany(models.UserPermission, {
+    foreignKey: 'user_id',
+    as: 'permissions'
+  })
+}
 
 export default User
