@@ -7,6 +7,7 @@ const RegisterPage = () => {
     fullName: '',
     username: '',
     password: '',
+    confirmPassword: '',
     cedula: '',
     telefono: '',
     direccion: '',
@@ -20,7 +21,7 @@ const RegisterPage = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    
+
     // Validación nombre completo
     if (!formData.fullName.trim()) {
       newErrors.fullName = 'El nombre es requerido';
@@ -40,6 +41,12 @@ const RegisterPage = () => {
       newErrors.password = 'La contraseña es requerida';
     } else if (formData.password.length < 6) {
       newErrors.password = 'La contraseña debe tener al menos 6 caracteres';
+    }
+
+    if (!formData.confirmPassword) {
+      newErrors.confirmPassword = 'Debe confirmar la contraseña';
+    } else if (formData.confirmPassword !== formData.password) {
+      newErrors.confirmPassword = 'Las contraseñas no coinciden';
     }
 
     // Validación cédula
@@ -95,150 +102,307 @@ const RegisterPage = () => {
     }
   };
 
+  // return (
+  //   <div className="flex items-center justify-center min-h-screen bg-[#1C1C1C] p-4">
+  //     <form onSubmit={handleSubmit} className="bg-[#2A2A2A] p-4 rounded-lg shadow-lg max-w-md w-full">
+  //       <h2 className="text-2xl font-bold text-center mb-4 text-white">Registrarse</h2>
+
+  //       <div className="grid grid-cols-2 gap-4">
+  //         <div>
+  //         <label className="block text-white">Nombre Completo</label>
+  //           <input
+  //             type="text"
+  //             name="fullName"
+  //             placeholder="Nombre y apellido (John Doe)"
+  //             value={formData.fullName}
+  //             onChange={handleChange}
+  //             className={`w-full px-4 py-2 bg-[#1C1C1C] text-white border ${errors.fullName ? 'border-red-500' : 'border-gray-700'
+  //               } rounded-md focus:outline-none focus:ring-2 focus:ring-[#0D4E2C] focus:border-transparent placeholder-gray-400`}
+  //           />
+  //           {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>}
+  //         </div>
+
+  //         <div>
+  //         <label className="block text-white">Correo Electrónico</label>
+  //           <input
+  //             type="email"
+  //             name="username"
+  //             placeholder="Correo electrónico"
+  //             value={formData.username}
+  //             onChange={handleChange}
+  //             className={`w-full px-4 py-2 bg-[#1C1C1C] text-white border ${errors.username ? 'border-red-500' : 'border-gray-700'
+  //               } rounded-md focus:outline-none focus:ring-2 focus:ring-[#0D4E2C] focus:border-transparent placeholder-gray-400`}
+  //           />
+  //           {errors.username && <p className="text-red-500 text-sm mt-1">{errors.username}</p>}
+  //         </div>
+
+  //         <div>
+  //         <label className="block text-white">Contraseña</label>
+  //           <input
+  //             type="password"
+  //             name="password"
+  //             placeholder="Contraseña"
+  //             value={formData.password}
+  //             onChange={handleChange}
+  //             className={`w-full px-4 py-2 bg-[#1C1C1C] text-white border ${errors.password ? 'border-red-500' : 'border-gray-700'
+  //               } rounded-md focus:outline-none focus:ring-2 focus:ring-[#0D4E2C] focus:border-transparent placeholder-gray-400`}
+  //           />
+  //           {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
+  //         </div>
+
+  //         {/* Nueva caja de confirmación de contraseña */}
+  //         <label className="block text-white">Confirmar Contraseña</label>
+  //         <input
+  //           type="password"
+  //           name="confirmPassword"
+  //           placeholder="Confirmar contraseña"
+  //           value={formData.confirmPassword}
+  //           onChange={handleChange}
+  //           className={`w-full px-4 py-2 bg-[#1C1C1C] text-white border ${errors.confirmPassword ? 'border-red-500' : 'border-gray-700'} rounded-md focus:outline-none placeholder-gray-400`} />
+  //         {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword}</p>}
+
+
+  //         <div>
+  //         <label className="block text-white">Cédula</label>
+  //           <input
+  //             type="text"
+  //             name="cedula"
+  //             placeholder="Cédula"
+  //             value={formData.cedula}
+  //             onChange={handleChange}
+  //             className={`w-full px-4 py-2 bg-[#1C1C1C] text-white border ${errors.cedula ? 'border-red-500' : 'border-gray-700'
+  //               } rounded-md focus:outline-none focus:ring-2 focus:ring-[#0D4E2C] focus:border-transparent placeholder-gray-400`}
+  //           />
+  //           {errors.cedula && <p className="text-red-500 text-sm mt-1">{errors.cedula}</p>}
+  //         </div>
+
+  //         <div>
+  //         <label className="block text-white">Teléfono</label>
+  //           <input
+  //             type="tel"
+  //             name="telefono"
+  //             placeholder="Teléfono"
+  //             value={formData.telefono}
+  //             onChange={handleChange}
+  //             className={`w-full px-4 py-2 bg-[#1C1C1C] text-white border ${errors.telefono ? 'border-red-500' : 'border-gray-700'
+  //               } rounded-md focus:outline-none focus:ring-2 focus:ring-[#0D4E2C] focus:border-transparent placeholder-gray-400`}
+  //           />
+  //           {errors.telefono && <p className="text-red-500 text-sm mt-1">{errors.telefono}</p>}
+  //         </div>
+
+  // <div>
+  // <label className="block text-white">Dirección</label>
+  //   <input
+  //     type="text"
+  //     name="direccion"
+  //     placeholder="Dirección"
+  //     value={formData.direccion}
+  //     onChange={handleChange}
+  //     className={`w-full px-4 py-2 bg-[#1C1C1C] text-white border ${errors.direccion ? 'border-red-500' : 'border-gray-700'
+  //       } rounded-md focus:outline-none focus:ring-2 focus:ring-[#0D4E2C] focus:border-transparent placeholder-gray-400`}
+  //   />
+  //   {errors.direccion && <p className="text-red-500 text-sm mt-1">{errors.direccion}</p>}
+  // </div>
+
+  // <div>
+  // <label className="block text-white">Ocupación</label>
+  //   <input type="text"
+  //     name='ocupacion'
+  //     placeholder='Ocupación'
+  //     value={formData.ocupacion}
+  //     onChange={handleChange}
+  //     className={`w-full px-4 py-2 bg-[#1C1C1C] text-white border ${errors.ocupacion ? 'border-red-500' : 'border-gray-700'
+  //       } rounded-md focus:outline-none focus:ring-2 focus:ring-[#0D4E2C] focus:border-transparent placeholder-gray-400`}
+  //   />
+  // </div>
+  //         <div>
+  //         <label className="block text-white">Fecha de Nacimiento</label>
+  //           <input
+  //             type="date"
+  //             name="fechaNacimiento"
+  //             placeholder='Fecha de nacimiento'
+  //             value={formData.fechaNacimiento}
+  //             onChange={handleChange}
+  //             className={`w-full px-4 py-2 bg-[#1C1C1C] text-white border ${errors.fechaNacimiento ? 'border-red-500' : 'border-gray-700'
+  //               } rounded-md focus:outline-none focus:ring-2 focus:ring-[#0D4E2C] focus:border-transparent
+  //         [&::-webkit-calendar-picker-indicator]:bg-[#0D4E2C]
+  //         [&::-webkit-calendar-picker-indicator]:hover:bg-[#0A3D22]
+  //         [&::-webkit-calendar-picker-indicator]:p-1
+  //         [&::-webkit-calendar-picker-indicator]:rounded
+  //         [&::-webkit-calendar-picker-indicator]:cursor-pointer`}
+  //           />
+  //           {errors.fechaNacimiento && <p className="text-red-500 text-sm mt-1">{errors.fechaNacimiento}</p>}
+  //         </div>
+
+  // <div>
+  // <label className="block text-white">Género</label>
+  //   <select
+  //     name="genero"
+  //     value={formData.genero}
+  //     onChange={handleChange}
+  //     className={`w-full px-4 py-2 bg-[#1C1C1C] text-white border ${errors.genero ? 'border-red-500' : 'border-gray-700'
+  //       } rounded-md focus:outline-none focus:ring-2 focus:ring-[#0D4E2C] focus:border-transparent`}
+  //   >
+  //     <option value="" className="bg-[#1C1C1C]">Seleccione su género</option>
+  //     <option value="masculino" className="bg-[#1C1C1C]">Masculino</option>
+  //     <option value="femenino" className="bg-[#1C1C1C]">Femenino</option>
+  //   </select>
+  //   {errors.genero && <p className="text-red-500 text-sm mt-1">{errors.genero}</p>}
+  // </div>
+
+  //         <button
+  //           type="submit"
+  //           className="w-full bg-[#0D4E2C] text-white py-2 px-4 rounded-md hover:bg-[#0A3D22] transition duration-200 ease-in-out font-medium"
+  //         >
+  //           Registrarse
+  //         </button>
+
+  //         <p className="text-sm text-gray-400 mt-4 text-center">
+  //           ¿Ya tienes una cuenta?  
+  //           <span className="text-cyan-500 cursor-pointer hover:underline ml-1" onClick={() => navigate('/login')}>
+  //             Inicia sesión aquí
+  //           </span>
+  //         </p>
+
+  //       </div>
+  //     </form>
+  //   </div>
+  // );
   return (
     <div className="flex items-center justify-center min-h-screen bg-[#1C1C1C] p-4">
-  <form onSubmit={handleSubmit} className="bg-[#2A2A2A] p-8 rounded-lg shadow-lg max-w-md w-full">
-    <h2 className="text-2xl font-bold text-center mb-6 text-white">Registrarse</h2>
-    
-    <div className="space-y-4">
-      <div>
-        <input 
-          type="text"
-          name="fullName"
-          placeholder="Nombre y apellido (John Doe)"
-          value={formData.fullName}
-          onChange={handleChange}
-          className={`w-full px-4 py-2 bg-[#1C1C1C] text-white border ${
-            errors.fullName ? 'border-red-500' : 'border-gray-700'
-          } rounded-md focus:outline-none focus:ring-2 focus:ring-[#0D4E2C] focus:border-transparent placeholder-gray-400`}
-        />
-        {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>}
-      </div>
+      <form onSubmit={handleSubmit} className="bg-[#2A2A2A] p-6 rounded-lg shadow-lg max-w-3xl w-full">
+        <h2 className="text-2xl font-bold text-center mb-4 text-white">Registrarse</h2>
 
-      <div>
-        <input
-          type="email"
-          name="username"
-          placeholder="Correo electrónico"
-          value={formData.username}
-          onChange={handleChange}
-          className={`w-full px-4 py-2 bg-[#1C1C1C] text-white border ${
-            errors.username ? 'border-red-500' : 'border-gray-700'
-          } rounded-md focus:outline-none focus:ring-2 focus:ring-[#0D4E2C] focus:border-transparent placeholder-gray-400`}
-        />
-        {errors.username && <p className="text-red-500 text-sm mt-1">{errors.username}</p>}
-      </div>
+        {/* Campos en dos columnas */}
+        <div className="grid grid-cols-2 gap-4">
+          {/* Nombre Completo */}
+          <div>
+            <label className="text-white">Nombre Completo</label>
+            <input type="text" name="fullName" placeholder="Ej: Juan Pérez" value={formData.fullName} onChange={handleChange}
+              className={`w-full px-4 py-2 bg-[#1C1C1C] text-white border ${errors.fullName ? 'border-red-500' : 'border-gray-700'} 
+              rounded-md focus:outline-none focus:ring-2 focus:ring-[#0D4E2C] focus:border-transparent placeholder-gray-400`} />
+            {errors.fullName && <p className="text-red-500 text-sm">{errors.fullName}</p>}
+          </div>
 
-      <div>
-        <input
-          type="password"
-          name="password"
-          placeholder="Contraseña"
-          value={formData.password}
-          onChange={handleChange}
-          className={`w-full px-4 py-2 bg-[#1C1C1C] text-white border ${
-            errors.password ? 'border-red-500' : 'border-gray-700'
-          } rounded-md focus:outline-none focus:ring-2 focus:ring-[#0D4E2C] focus:border-transparent placeholder-gray-400`}
-        />
-        {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
-      </div>
+          {/* Correo Electrónico */}
+          <div>
+            <label className="text-white">Correo Electrónico</label>
+            <input type="email" name="username" placeholder="Ej: usuario@email.com" value={formData.username} onChange={handleChange}
+              className={`w-full px-4 py-2 bg-[#1C1C1C] text-white border ${errors.username ? 'border-red-500' : 'border-gray-700'} 
+              rounded-md focus:outline-none focus:ring-2 focus:ring-[#0D4E2C] focus:border-transparent placeholder-gray-400`} />
+            {errors.username && <p className="text-red-500 text-sm">{errors.username}</p>}
+          </div>
 
-      <div>
-        <input 
-          type="text"
-          name="cedula"
-          placeholder="Cédula"
-          value={formData.cedula}
-          onChange={handleChange}
-          className={`w-full px-4 py-2 bg-[#1C1C1C] text-white border ${
-            errors.cedula ? 'border-red-500' : 'border-gray-700'
-          } rounded-md focus:outline-none focus:ring-2 focus:ring-[#0D4E2C] focus:border-transparent placeholder-gray-400`}
-        />
-        {errors.cedula && <p className="text-red-500 text-sm mt-1">{errors.cedula}</p>}
-      </div>
+          {/* Contraseña */}
+          <div>
+            <label className="text-white">Contraseña</label>
+            <input type="password" name="password" placeholder="Mínimo 6 caracteres" value={formData.password} onChange={handleChange}
+              className={`w-full px-4 py-2 bg-[#1C1C1C] text-white border ${errors.password ? 'border-red-500' : 'border-gray-700'} 
+              rounded-md focus:outline-none focus:ring-2 focus:ring-[#0D4E2C] focus:border-transparent placeholder-gray-400`} />
+            {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
+          </div>
 
-      <div>
-        <input 
-          type="tel"
-          name="telefono"
-          placeholder="Teléfono"
-          value={formData.telefono}
-          onChange={handleChange}
-          className={`w-full px-4 py-2 bg-[#1C1C1C] text-white border ${
-            errors.telefono ? 'border-red-500' : 'border-gray-700'
-          } rounded-md focus:outline-none focus:ring-2 focus:ring-[#0D4E2C] focus:border-transparent placeholder-gray-400`}
-        />
-        {errors.telefono && <p className="text-red-500 text-sm mt-1">{errors.telefono}</p>}
-      </div>
+          {/* Confirmar Contraseña */}
+          <div>
+            <label className="text-white">Confirmar Contraseña</label>
+            <input type="password" name="confirmPassword" placeholder="Repite tu contraseña" value={formData.confirmPassword} onChange={handleChange}
+              className={`w-full px-4 py-2 bg-[#1C1C1C] text-white border ${errors.confirmPassword ? 'border-red-500' : 'border-gray-700'} 
+              rounded-md focus:outline-none focus:ring-2 focus:ring-[#0D4E2C] focus:border-transparent placeholder-gray-400`} />
+            {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword}</p>}
+          </div>
 
-      <div>
-        <input 
-          type="text"
-          name="direccion"
-          placeholder="Dirección"
-          value={formData.direccion}
-          onChange={handleChange}
-          className={`w-full px-4 py-2 bg-[#1C1C1C] text-white border ${
-            errors.direccion ? 'border-red-500' : 'border-gray-700'
-          } rounded-md focus:outline-none focus:ring-2 focus:ring-[#0D4E2C] focus:border-transparent placeholder-gray-400`}
-        />
-        {errors.direccion && <p className="text-red-500 text-sm mt-1">{errors.direccion}</p>}
-      </div>
+          {/* Cédula */}
+          <div>
+            <label className="text-white">Cédula</label>
+            <input type="text" name="cedula" placeholder="Ej: 1234567890" value={formData.cedula} onChange={handleChange}
+              className={`w-full px-4 py-2 bg-[#1C1C1C] text-white border ${errors.cedula ? 'border-red-500' : 'border-gray-700'} 
+              rounded-md focus:outline-none focus:ring-2 focus:ring-[#0D4E2C] focus:border-transparent placeholder-gray-400`} />
+            {errors.cedula && <p className="text-red-500 text-sm">{errors.cedula}</p>}
+          </div>
 
-      <div>
-        <input type="text"
-        name='ocupacion'
-        placeholder='Ocupación'
-        value={formData.ocupacion}
-        onChange={handleChange}
-        className={`w-full px-4 py-2 bg-[#1C1C1C] text-white border ${
-          errors.ocupacion ? 'border-red-500' : 'border-gray-700'
-        } rounded-md focus:outline-none focus:ring-2 focus:ring-[#0D4E2C] focus:border-transparent placeholder-gray-400`}        
-        />
-      </div>
-      <div>
-        <input 
-          type="date"
-          name="fechaNacimiento"
-          value={formData.fechaNacimiento}
-          onChange={handleChange}
-          className={`w-full px-4 py-2 bg-[#1C1C1C] text-white border ${
-            errors.fechaNacimiento ? 'border-red-500' : 'border-gray-700'
-          } rounded-md focus:outline-none focus:ring-2 focus:ring-[#0D4E2C] focus:border-transparent
-          [&::-webkit-calendar-picker-indicator]:bg-[#0D4E2C]
-          [&::-webkit-calendar-picker-indicator]:hover:bg-[#0A3D22]
-          [&::-webkit-calendar-picker-indicator]:p-1
-          [&::-webkit-calendar-picker-indicator]:rounded
-          [&::-webkit-calendar-picker-indicator]:cursor-pointer`}
-        />
-        {errors.fechaNacimiento && <p className="text-red-500 text-sm mt-1">{errors.fechaNacimiento}</p>}
-      </div>
+          <div>
+            <label className="block text-white">Teléfono</label>
+            <input
+              type="tel"
+              name="telefono"
+              placeholder="Ej: 0999764781"
+              value={formData.telefono}
+              onChange={handleChange}
+              className={`w-full px-4 py-2 bg-[#1C1C1C] text-white border ${errors.telefono ? 'border-red-500' : 'border-gray-700'
+                } rounded-md focus:outline-none focus:ring-2 focus:ring-[#0D4E2C] focus:border-transparent placeholder-gray-400`}
+            />
+            {errors.telefono && <p className="text-red-500 text-sm mt-1">{errors.telefono}</p>}
+          </div>
 
-      <div>
-        <select 
-          name="genero"
-          value={formData.genero}
-          onChange={handleChange}
-          className={`w-full px-4 py-2 bg-[#1C1C1C] text-white border ${
-            errors.genero ? 'border-red-500' : 'border-gray-700'
-          } rounded-md focus:outline-none focus:ring-2 focus:ring-[#0D4E2C] focus:border-transparent`}
-        >
-          <option value="" className="bg-[#1C1C1C]">Seleccione su género</option>
-          <option value="masculino" className="bg-[#1C1C1C]">Masculino</option>
-          <option value="femenino" className="bg-[#1C1C1C]">Femenino</option>
-        </select>
-        {errors.genero && <p className="text-red-500 text-sm mt-1">{errors.genero}</p>}
-      </div>
+          <div>
+            <label className="block text-white">Dirección</label>
+            <input
+              type="text"
+              name="direccion"
+              placeholder="Dirección"
+              value={formData.direccion}
+              onChange={handleChange}
+              className={`w-full px-4 py-2 bg-[#1C1C1C] text-white border ${errors.direccion ? 'border-red-500' : 'border-gray-700'
+                } rounded-md focus:outline-none focus:ring-2 focus:ring-[#0D4E2C] focus:border-transparent placeholder-gray-400`}
+            />
+            {errors.direccion && <p className="text-red-500 text-sm mt-1">{errors.direccion}</p>}
+          </div>
 
-      <button 
-        type="submit" 
-        className="w-full bg-[#0D4E2C] text-white py-2 px-4 rounded-md hover:bg-[#0A3D22] transition duration-200 ease-in-out font-medium"
-      >
-        Registrarse
-      </button>
+          <div>
+            <label className="block text-white">Ocupación</label>
+            <input type="text"
+              name='ocupacion'
+              placeholder='Ocupación'
+              value={formData.ocupacion}
+              onChange={handleChange}
+              className={`w-full px-4 py-2 bg-[#1C1C1C] text-white border ${errors.ocupacion ? 'border-red-500' : 'border-gray-700'
+                } rounded-md focus:outline-none focus:ring-2 focus:ring-[#0D4E2C] focus:border-transparent placeholder-gray-400`}
+            />
+          </div>
+
+          {/* Fecha de Nacimiento */}
+          <div>
+            <label className="text-white">Fecha de Nacimiento</label>
+            <input type="date" name="fechaNacimiento" value={formData.fechaNacimiento} onChange={handleChange}
+              className={`w-full px-4 py-2 bg-[#1C1C1C] text-white border ${errors.fechaNacimiento ? 'border-red-500' : 'border-gray-700'} 
+              rounded-md focus:outline-none focus:ring-2 focus:ring-[#0D4E2C] focus:border-transparent`} />
+            {errors.fechaNacimiento && <p className="text-red-500 text-sm">{errors.fechaNacimiento}</p>}
+          </div>
+
+
+          <div>
+            <label className="block text-white">Género</label>
+            <select
+              name="genero"
+              value={formData.genero}
+              onChange={handleChange}
+              className={`w-full px-4 py-2 bg-[#1C1C1C] text-white border ${errors.genero ? 'border-red-500' : 'border-gray-700'
+                } rounded-md focus:outline-none focus:ring-2 focus:ring-[#0D4E2C] focus:border-transparent`}
+            >
+              <option value="" className="bg-[#1C1C1C]">Seleccione su género</option>
+              <option value="masculino" className="bg-[#1C1C1C]">Masculino</option>
+              <option value="femenino" className="bg-[#1C1C1C]">Femenino</option>
+            </select>
+            {errors.genero && <p className="text-red-500 text-sm mt-1">{errors.genero}</p>}
+          </div>
+
+
+        </div>
+
+
+        {/* Botón de registro */}
+        <button type="submit" className="w-full bg-[#0D4E2C] text-white py-2 rounded-md hover:bg-[#0A3D22] transition duration-200 ease-in-out font-medium mt-4">
+          Registrarse
+        </button>
+
+        <p className="text-sm text-gray-400 mt-2 text-center">
+          ¿Ya tienes una cuenta?
+          <span className="text-cyan-500 cursor-pointer hover:underline ml-1" onClick={() => navigate('/login')}>
+            Inicia sesión aquí
+          </span>
+        </p>
+      </form>
     </div>
-  </form>
-</div>
   );
 };
 

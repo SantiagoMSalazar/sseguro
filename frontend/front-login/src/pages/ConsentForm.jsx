@@ -7,13 +7,11 @@ const ConsentForm = () => {
   const navigate = useNavigate();
 
   const handleContinue = () => {
-    navigate('/profile');
+    navigate('/register');
   };
 
   return (
     <div className="min-h-screen bg-[#1C1C1C] text-white">
-      {/* Header */}
-      <Header />
 
       {/* Logo */}
       <div className="px-8 py-4">
@@ -97,8 +95,7 @@ const ConsentForm = () => {
           </button>
           <button
             className={`px-8 py-2 rounded w-fit  bg-black text-white cursor-pointer`}
-            disabled={!isChecked}
-            onClick={handleContinue}
+            onClick={() => navigate('/login')}
           >
             Cancelar
           </button>
