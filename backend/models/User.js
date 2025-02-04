@@ -48,6 +48,15 @@ const User = sequelize.define('User', {
     type: DataTypes.ENUM('admin', 'usuario'), // Solo puede ser 'admin' o 'user'
     allowNull: false,
     defaultValue: 'usuario'
+  },
+
+  genero: {
+    type: DataTypes.ENUM('masculino', 'femenino', 'otro'),
+    allowNull: false
+  },
+  ocupacion: {
+    type: DataTypes.STRING(30),
+    allowNull: false
   }
 }, {
   tableName: 'users', // Nombre de la tabla en la base de datos

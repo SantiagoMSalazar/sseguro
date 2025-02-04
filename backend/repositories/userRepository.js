@@ -4,7 +4,7 @@ import UserPermission from '../models/UserPermissions.js'
 
 export class UserRepository {
   // eslint-disable-next-line camelcase
-  static async create ({ nombre, email, password, cedula, telefono, direccion, fecha_nacimiento }) {
+  static async create ({ nombre, email, password, cedula, telefono, direccion, fecha_nacimiento, genero, ocupacion }) {
     // Validaciones
     Validations.nombre(nombre)
     Validations.email(email)
@@ -13,6 +13,8 @@ export class UserRepository {
     Validations.telefono(telefono)
     Validations.direccion(direccion)
     Validations.fecha_nacimiento(fecha_nacimiento)
+    Validations.genero(genero)
+    Validations.ocupacion(ocupacion)
 
     // Verificar si el usuario ya existe
     let user = await User.findOne({ where: { email } })
@@ -30,7 +32,9 @@ export class UserRepository {
       telefono,
       direccion,
       // eslint-disable-next-line camelcase
-      fecha_nacimiento
+      fecha_nacimiento,
+      genero,
+      ocupacion
     })
 
     return user.id
@@ -162,5 +166,15 @@ class Validations {
       // eslint-disable-next-line camelcase
       throw new Error('La fecha de nacimiento debe ser una fecha válida' + fecha_nacimiento)
     }
+  }
+
+  static genero (genero) {
+    if (typeof genero !== 'string') throw new Error('El género debe ser una cadena de texto')
+    if (!['masculino', 'femenino', 'otro'].includes(genero)) throw new Error('El género debe ser masculino, femenino u otro')
+  }
+
+  static ocupacion (ocupacion) {
+    if (typeof ocupacion !== 'string') throw new Error('La ocupación debe ser una cadena de texto')
+    if (ocupacion.length < 3) throw new Error('La ocupación debe tener al menos 3 caracteres')
   }
 }
