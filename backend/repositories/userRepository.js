@@ -62,7 +62,8 @@ export class UserRepository {
     return {
       id: user.id,
       nombre: user.nombre,
-      email: user.email
+      email: user.email,
+      rol: user.rol
     }
   }
 

@@ -10,7 +10,7 @@ router.post('/login', async (req, res) => {
   try {
     const user = await UserRepository.login({ email, password })
     const token = jwt.sign(
-      { id: user.id, nombre: user.nombre, email: user.email },
+      { id: user.id, nombre: user.nombre, email: user.email, rol: user.rol },
       SECRET_JWT_KEY,
       { expiresIn: '1h' }
     )
