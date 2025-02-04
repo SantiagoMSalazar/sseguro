@@ -45,7 +45,7 @@ const LoginPage = () => {
     if (validateForm()) {
       try {
         await login(formData.username, formData.password);
-        navigate('/home');
+        navigate('/notes');
       } catch (error) {
         alert(error.message);
       }
@@ -54,7 +54,7 @@ const LoginPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-[#1C1C1C] text-white">
-      <div className='text-center'> 
+      <div className='text-center'>
         <h1 className='font-bold text-3xl'>Bienvenido al Registro de Notas</h1>
         <p>Nuestra prioridad es tu seguridad</p>
       </div>
@@ -68,9 +68,8 @@ const LoginPage = () => {
             placeholder="Correo electrónico"
             value={formData.username}
             onChange={handleChange}
-            className={`w-full bg-transparent border-b py-2 text-white focus:outline-none ${
-              errors.username ? 'border-red-500' : 'border-gray-700'
-            }`}
+            className={`w-full bg-transparent border-b py-2 text-white focus:outline-none ${errors.username ? 'border-red-500' : 'border-gray-700'
+              }`}
           />
           {errors.username && <p className="text-red-500 text-sm mt-1">{errors.username}</p>}
         </div>
@@ -82,18 +81,29 @@ const LoginPage = () => {
             placeholder="Contraseña"
             value={formData.password}
             onChange={handleChange}
-            className={`w-full bg-transparent border-b py-2 text-white focus:outline-none ${
-              errors.password ? 'border-red-500' : 'border-gray-700'
-            }`}
+            className={`w-full bg-transparent border-b py-2 text-white focus:outline-none ${errors.password ? 'border-red-500' : 'border-gray-700'
+              }`}
           />
           {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
         </div>
-        <button 
-          type="submit" 
+        <button
+          type="submit"
           className="w-full bg-cyan-800 text-white py-2 rounded hover:bg-blue-700 transition-colors"
         >
           Iniciar Sesión
         </button>
+
+        {/* Mensaje con enlace de registro */}
+        <p className="text-sm text-gray-400 mt-4 text-center">
+          ¿No tienes una cuenta?
+          <span
+            className="text-cyan-500 cursor-pointer hover:underline ml-1"
+            onClick={() => navigate('/consent-form-register')}
+          >
+            Regístrate aquí
+          </span>
+        </p>
+        
       </form>
     </div>
   );

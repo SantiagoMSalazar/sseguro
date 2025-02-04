@@ -1,4 +1,5 @@
 // src/components/ConfigPage.jsx
+import Header from '../components/Home/HeaderComponent';
 import { useNavigate } from 'react-router-dom';
 
 const ConfigPage = () => {
@@ -7,15 +8,7 @@ const ConfigPage = () => {
   return (
     <div className="min-h-screen bg-[#1C1C1C] text-white">
       {/* Header */}
-      <nav className="flex justify-between px-4 py-3 text-sm border-b border-gray-800">
-        <div className="flex justify-between w-full">
-          <span className="cursor-pointer hover:text-gray-300">Inicio</span>
-          <span className="cursor-pointer hover:text-gray-300">Mis Notas</span>
-          <span className="cursor-pointer hover:text-gray-300">Configuración</span>
-          <span className="cursor-pointer hover:text-gray-300">Soporte y documentación</span>
-          <div className="w-6 h-6 rounded-full bg-gray-700 cursor-pointer"></div>
-        </div>
-      </nav>
+      <Header />
 
       {/* Logo */}
       <div className="px-8 py-4">
@@ -36,7 +29,7 @@ const ConfigPage = () => {
           </button>
           <button 
             className="bg-gray-700 hover:bg-gray-600 text-white px-8 py-4 rounded w-40"
-            onClick={() => navigate('/lopdp-permissions')}
+            onClick={() => navigate('/lopd-permissions')}
           >
             Permisos LOPDP
           </button>

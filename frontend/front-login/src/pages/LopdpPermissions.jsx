@@ -1,5 +1,6 @@
 // src/components/LopdpPermissions.jsx
 import { useState } from 'react';
+import Header from '../components/Home/HeaderComponent';
 import { useNavigate } from 'react-router-dom';
 
 const LopdpPermissions = () => {
@@ -54,13 +55,7 @@ const LopdpPermissions = () => {
   return (
     <div className="min-h-screen bg-[#1C1C1C] text-white">
       {/* Header Nav */}
-      <nav className="flex justify-between px-4 py-3 text-sm border-b border-gray-800">
-        <div className="flex justify-between w-full">
-          <span className="cursor-pointer hover:text-gray-300">Mis Notas</span>
-          <span className="cursor-pointer hover:text-gray-300">Publicar datos</span>
-          <span className="cursor-pointer hover:text-gray-300">LOPDP</span>
-        </div>
-      </nav>
+      <Header/>
 
       {/* Logo */}
       <div className="px-8 py-4">
@@ -69,7 +64,7 @@ const LopdpPermissions = () => {
 
       {/* Main Content */}
       <div className="max-w-5xl mx-auto px-8">
-        <h2 className="text-2xl text-center mb-8">Permisos LOPDP</h2>
+        <h2 className="text-2xl text-center mb-8">Permisos LOPD</h2>
 
         <div className="bg-[#242424] rounded-lg p-6">
           <table className="w-full">
