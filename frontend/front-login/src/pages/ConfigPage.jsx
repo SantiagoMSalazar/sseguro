@@ -29,7 +29,7 @@ const ConfigPage = () => {
           </button>
           <button 
             className="bg-gray-700 hover:bg-gray-600 text-white px-8 py-4 rounded w-40"
-            onClick={() => navigate('/lopdp-permissions')}
+            onClick={() => navigate('/lopd-permissions')}
           >
             Permisos LOPDP
           </button>
