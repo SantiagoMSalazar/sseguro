@@ -71,6 +71,8 @@ export const AuthProvider = ({ children }) => {
       telefono: userData.telefono,
       direccion: userData.direccion,
       fecha_nacimiento: userData.fechaNacimiento,
+      genero: userData.genero,
+      ocupacion: userData.ocupacion
     });
     return data;
   };

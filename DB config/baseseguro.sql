@@ -11,11 +11,13 @@ CREATE TABLE Users (
   updated_at TIMESTAMP DEFAULT NOW()
 );
 ALTER TABLE Users add column rol varchar(10)
+ALTER TABLE users add column genero varchar (15)
+ALTER TABLE users add column ocupacion varchar (30)
 ALTER TABLE Users ALTER COLUMN rol SET DEFAULT 'usuario';
 
 UPDATE Users
 SET
-    rol = 'admin'
+    ocupacion = 'estudiante'
 WHERE id = '50813483-f74e-4c98-999b-e92e090cd8b4';
 
 
@@ -146,4 +148,6 @@ SELECT
 
 FROM Users u;
 
-DELETE FROM users WHERE id = 'c80c231a-467a-42ad-8f23-2ff78e94ea3c'
+DELETE FROM users WHERE id = 'a3d38567-8105-4245-b0af-af93d17d26d7'
+DELETE FROM users WHERE id = 'f6ccb905-dee1-4e0f-b5f3-6d71086e5502'
+DELETE FROM users WHERE id = '1accc59e-f817-4aa0-9e03-9a03abe11dc7'

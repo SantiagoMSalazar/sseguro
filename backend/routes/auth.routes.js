@@ -30,7 +30,7 @@ router.post('/login', async (req, res) => {
 
 router.post('/register', async (req, res) => {
   // eslint-disable-next-line camelcase
-  const { nombre, email, password, cedula, telefono, direccion, fecha_nacimiento } = req.body
+  const { nombre, email, password, cedula, telefono, direccion, fecha_nacimiento, genero, ocupacion } = req.body
   try {
     const userId = await UserRepository.create({
       nombre,
@@ -40,11 +40,13 @@ router.post('/register', async (req, res) => {
       telefono,
       direccion,
       // eslint-disable-next-line camelcase
-      fecha_nacimiento
+      fecha_nacimiento,
+      genero,
+      ocupacion
     })
     res.status(201).json({ id: userId, message: 'Usuario registrado exitosamente' })
   } catch (error) {
-    // console.log(error)
+    console.log(error)
     res.status(400).json({ error: error.message })
   }
 })
