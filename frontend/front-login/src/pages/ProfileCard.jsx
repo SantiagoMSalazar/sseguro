@@ -44,7 +44,7 @@ const ProfileCard = () => {
                 <h3 className="text-white font-bold mb-4">Información del Perfil</h3>
                 <div className="space-y-4">
                   <div>
-                    <label className="text-gray-400 text-sm">Nombres</label>
+                    <label className="text-gray-400 text-sm">Nombre y Apellido</label>
                     <div className="border-b border-gray-700 py-1">
                       {user?.nombre || 'No disponible'}
                     </div>

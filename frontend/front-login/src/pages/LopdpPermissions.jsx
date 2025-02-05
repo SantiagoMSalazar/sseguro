@@ -1,4 +1,3 @@
-// src/components/LopdpPermissions.jsx
 import { useState } from 'react';
 import Header from '../components/Home/HeaderComponent';
 import { useNavigate } from 'react-router-dom';
@@ -6,22 +5,22 @@ import { useNavigate } from 'react-router-dom';
 const LopdpPermissions = () => {
   const navigate = useNavigate();
   const [permissions, setPermissions] = useState({
-    nombres: { publico: false, nocompartir: false, anonimizar: false, date: '' },
-    apellidos: { publico: false, nocompartir: false, anonimizar: false, date: '' },
-    cedula: { publico: false, nocompartir: false, verificacion: false, date: '' },
-    edad: { publico: false, nocompartir: false, anonimizar: false, date: '' },
-    direccion: { publico: false, nocompartir: false, solociudad: false, date: '' },
-    correo: { publico: false, nocompartir: false, anonimizar: false, date: '' },
-    telefono: { publico: false, nocompartir: false, solociudad: false, date: '' },
-    contactoEmergencia: { publico: false, nocompartir: false, anonimizar: false, date: '' }
+    nombres: { share: false, date: '' },
+    apellidos: { share: false, date: '' },
+    cedula: { share: false, date: '' },
+    edad: { share: false, date: '' },
+    direccion: { share: false, date: '' },
+    correo: { share: false, date: '' },
+    telefono: { share: false, date: '' },
+    contactoEmergencia: { share: false, date: '' }
   });
 
-  const handleOptionChange = (field, option) => {
+  const handleToggle = (field) => {
     setPermissions(prev => ({
       ...prev,
       [field]: {
         ...prev[field],
-        [option]: !prev[field][option]
+        share: !prev[field].share
       }
     }));
   };
@@ -37,7 +36,6 @@ const LopdpPermissions = () => {
   };
 
   const handleSubmit = () => {
-    // Aquí iría la lógica para enviar al backend
     console.log('Permisos a enviar:', permissions);
   };
 
@@ -54,26 +52,18 @@ const LopdpPermissions = () => {
 
   return (
     <div className="min-h-screen bg-[#1C1C1C] text-white">
-      {/* Header Nav */}
-      <Header/>
-
-      {/* Logo */}
-      <div className="px-8 py-4">
+      <Header />
+      <div className="px-8 py-4 text-center">
         <h1 className="text-xl font-semibold">ShareNotes</h1>
       </div>
-
-      {/* Main Content */}
-      <div className="max-w-5xl mx-auto px-8">
-        <h2 className="text-2xl text-center mb-8">Permisos LOPD</h2>
-
-        <div className="bg-[#242424] rounded-lg p-6">
-          <table className="w-full">
+      <div className="max-w-5xl mx-auto px-8 text-center">
+        <h2 className="text-2xl mb-8">Permisos LOPD</h2>
+        <div className="bg-[#242424] rounded-lg p-6 w-full">
+          <table className="w-full text-center">
             <thead>
-              <tr className="text-left">
+              <tr className="text-center">
                 <th className="py-2 px-4">Permiso</th>
-                <th className="py-2 px-4">Público</th>
-                <th className="py-2 px-4">No compartir</th>
-                <th className="py-2 px-4">Anonimizar/Solo ciudad/Verificación</th>
+                <th className="py-2 px-4">Compartir datos</th>
                 <th className="py-2 px-4">Fecha límite</th>
               </tr>
             </thead>
@@ -81,48 +71,30 @@ const LopdpPermissions = () => {
               {Object.entries(fieldLabels).map(([field, label]) => (
                 <tr key={field} className="border-t border-gray-700">
                   <td className="py-3 px-4">{label}</td>
-                  <td className="py-3 px-4">
-                    <input
-                      type="checkbox"
-                      checked={permissions[field].publico}
-                      onChange={() => handleOptionChange(field, 'publico')}
-                      className="form-checkbox"
-                    />
-                  </td>
-                  <td className="py-3 px-4">
-                    <input
-                      type="checkbox"
-                      checked={permissions[field].nocompartir}
-                      onChange={() => handleOptionChange(field, 'nocompartir')}
-                      className="form-checkbox"
-                    />
-                  </td>
-                  <td className="py-3 px-4">
-                    <input
-                      type="checkbox"
-                      checked={permissions[field][field === 'cedula' ? 'verificacion' : 
-                                              field === 'direccion' || field === 'telefono' ? 'solociudad' : 
-                                              'anonimizar']}
-                      onChange={() => handleOptionChange(field, field === 'cedula' ? 'verificacion' : 
-                                                              field === 'direccion' || field === 'telefono' ? 'solociudad' : 
-                                                              'anonimizar')}
-                      className="form-checkbox"
-                    />
+                  <td className="py-3 px-4 flex justify-center">
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={permissions[field].share}
+                        onChange={() => handleToggle(field)}
+                        className="sr-only peer"
+                      />
+                      <div className="w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500"></div>
+                    </label>
                   </td>
                   <td className="py-3 px-4">
                     <input
                       type="date"
                       value={permissions[field].date}
                       onChange={(e) => handleDateChange(field, e.target.value)}
-                      className="bg-gray-700 rounded px-2 py-1"
+                      className="bg-gray-700 rounded px-2 py-1 text-center"
                     />
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-
-          <div className="flex justify-end mt-6">
+          <div className="flex justify-center mt-6">
             <button
               onClick={handleSubmit}
               className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800"
