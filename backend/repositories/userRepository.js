@@ -118,6 +118,7 @@ export class UserRepository {
           telefono: permissions.telefono ? user.telefono : '0000000000',
           direccion: permissions.direccion ? user.direccion : 'Dirección Oculta',
           genero: permissions.genero ? user.genero : 'no disponible',
+          ocupacion: permissions.ocupacion ? user.ocupacion : 'no disponible',
           fecha_nacimiento: permissions.fecha_nacimiento ? user.fecha_nacimiento : null
         }
       })
