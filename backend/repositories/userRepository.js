@@ -117,8 +117,8 @@ export class UserRepository {
           cedula: permissions.cedula ? user.cedula : 'XXXXXXXXXX',
           telefono: permissions.telefono ? user.telefono : '0000000000',
           direccion: permissions.direccion ? user.direccion : 'Dirección Oculta',
-          fecha_nacimiento: permissions.fecha_nacimiento ? user.fecha_nacimiento : null,
-          rol: permissions.rol ? user.rol : 'No Disponible'
+          genero: permissions.genero ? user.genero : 'no disponible',
+          fecha_nacimiento: permissions.fecha_nacimiento ? user.fecha_nacimiento : null
         }
       })
     } catch (error) {
