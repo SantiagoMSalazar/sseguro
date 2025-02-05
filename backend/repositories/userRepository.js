@@ -1,6 +1,7 @@
 import User from '../models/User.js'
 import bcrypt from 'bcrypt'
 import UserPermission from '../models/UserPermissions.js'
+import sequelize from '../config/dbAuth.js'
 
 export class UserRepository {
   // eslint-disable-next-line camelcase
@@ -110,32 +111,26 @@ export class UserRepository {
 
   static async getPublicUsers () {
     try {
-      const users = await User.findAll({
-        include: [{
-          model: UserPermission,
-          as: 'permissions',
-          attributes: ['field_name', 'is_visible', 'expiration_date']
-        }]
-      })
-
-      return users.map(user => {
-        const permissions = user.permissions.reduce((acc, perm) => {
-          acc[perm.field_name] = perm.is_visible
-          return acc
-        }, {})
-
-        return {
-          id: user.id,
-          nombre: permissions.nombre ? user.nombre : 'Anonimizado',
-          email: permissions.email ? user.email : 'anonimizado@email.com',
-          cedula: permissions.cedula ? user.cedula : 'XXXXXXXXXX',
-          telefono: permissions.telefono ? user.telefono : '0000000000',
-          direccion: permissions.direccion ? user.direccion : 'Dirección Oculta',
-          genero: permissions.genero ? user.genero : 'no disponible',
-          ocupacion: permissions.ocupacion ? user.ocupacion : 'no disponible',
-          fecha_nacimiento: permissions.fecha_nacimiento ? user.fecha_nacimiento : null
+      // Usar consulta directa a la vista public_users
+      const users = await sequelize.query(
+        'SELECT * FROM public_users',
+        {
+          type: sequelize.QueryTypes.SELECT,
+          raw: true
         }
-      })
+      )
+      // Si necesitas mapear los resultados para mantener el mismo formato
+      return users.map(user => ({
+        id: user.id,
+        nombre: user.nombre || 'Anonimizado',
+        email: user.email || 'anonimizado@email.com',
+        cedula: user.cedula || 'XXXXXXXXXX',
+        telefono: user.telefono || '0000000000',
+        direccion: user.direccion || 'Dirección Oculta',
+        genero: user.genero || 'no disponible',
+        ocupacion: user.ocupacion || 'no disponible',
+        fecha_nacimiento: user.fecha_nacimiento || null
+      }))
     } catch (error) {
       throw new Error(`Error obteniendo usuarios públicos: ${error.message}`)
     }
