@@ -18,6 +18,7 @@ import AdminUserView from "../pages/AdminUserView";
 import { AuthProvider } from "../context/AuthContext";
 import { UserSelectionProvider } from "../context/UserSelectionContext";
 import ProtectedAdminRoute from "../components/Home/ProtectedAdminRoute";
+import DataProtectionArticles from "../pages/ConsentContracts";
 
 const AppRouter = () => {
   return (
@@ -46,7 +47,7 @@ const AppRouter = () => {
               {/* Rutas para consentimientos y LOPD */}
               <Route path="/lopd-permissions" element={<LopdpPermissions />} />
 
-              <Route path="/consents" element={<ConsentContracts />} />
+              <Route path="/consents" element={<DataProtectionArticles />} />
 
               {/* Rutas para páginas de admin */}
               <Route element={<ProtectedAdminRoute />}>

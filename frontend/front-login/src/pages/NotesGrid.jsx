@@ -1,12 +1,13 @@
-// src/components/NotesGrid.jsx
+// src/components/NotesGrid.jsx 
 import { useState } from 'react';
 import Header from '../components/Home/HeaderComponent';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext'; // Ajusta la ruta según tu estructura
 
 const NotesGrid = () => {
   const navigate = useNavigate();
+  const { logout } = useAuth();
   
-  // Estado para las notas
   const [notes, setNotes] = useState([
     {
       id: 1,
@@ -21,60 +22,63 @@ const NotesGrid = () => {
     }
   ]);
 
-  const handleNewNote = () => {
-    navigate('/notes/new');
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate('/login');
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+    }
   };
 
-  const handleNoteClick = (noteId) => {
-    navigate(`/notes/edit/${noteId}`);
+  const handleExportData = () => {
+    // Crear el objeto para exportar
+    const dataToExport = {
+      notes: notes,
+      exportDate: new Date().toISOString()
+    };
+
+    // Convertir a JSON string
+    const jsonString = JSON.stringify(dataToExport, null, 2);
+    
+    // Crear blob y descargar
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `notas_${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
   };
 
   return (
     <div className="min-h-screen bg-[#1C1C1C] text-white">
-      {/* Header Nav */}
       <Header/>
 
-      {/* Header with Logo and Export button */}
       <div className="flex justify-between items-center px-8 py-4">
         <h1 className="text-xl font-semibold">ShareNotes</h1>
-        <button className="bg-green-700 text-white px-4 py-2 rounded">
-          Exportar datos
-        </button>
-      </div>
-
-      {/* Notes Grid Container */}
-      <div className="px-8">
-        <div className="grid grid-cols-4 gap-4 auto-rows-min">
-          {/* Notas existentes */}
-          {notes.map((note) => (
-            <div 
-              key={note.id} 
-              className="bg-[#242424] rounded-lg p-4 cursor-pointer hover:bg-[#2a2a2a] min-h-[150px]"
-              onClick={() => handleNoteClick(note.id)}
-            >
-              <div className="flex justify-between items-center mb-2">
-                <h3 className="font-medium">{note.title}</h3>
-                <span className="text-xs text-gray-400">{note.date}</span>
-              </div>
-              <p className="text-sm text-gray-300 line-clamp-3">
-                {note.content}
-              </p>
-            </div>
-          ))}
-          
-          {/* Botón Nueva Nota integrado en el grid */}
-          <div className="min-h-[150px] flex items-center justify-center">
-            <button 
-              className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800"
-              onClick={handleNewNote}
-            >
-              Nueva Nota
-            </button>
-          </div>
+        <div className="flex gap-4">
+          <button 
+            onClick={handleExportData}
+            className="bg-green-700 text-white px-4 py-2 rounded hover:bg-green-800"
+          >
+            Exportar datos
+          </button>
+          <button 
+            onClick={handleLogout}
+            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+          >
+            Cerrar Sesión
+          </button>
         </div>
       </div>
 
-      {/* Padding bottom para asegurar espacio al final */}
+      <div className="px-8">
+        
+      </div>
+
       <div className="h-8"></div>
     </div>
   );

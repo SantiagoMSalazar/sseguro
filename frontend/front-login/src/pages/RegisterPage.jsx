@@ -72,6 +72,16 @@ const RegisterPage = () => {
     if (!formData.fechaNacimiento) {
       newErrors.fechaNacimiento = 'La fecha de nacimiento es requerida';
     }
+    // fecha de nacimiento inferior a fecha actual
+    else if (new Date(formData.fechaNacimiento) > new Date()) {
+      newErrors.fechaNacimiento = 'La fecha de nacimiento no puede ser mayor a la fecha actual';
+    }
+    //alerta de menor de edad- necesecita aceptar para tutor especial
+    else if (new Date().getFullYear() - new Date(formData.fechaNacimiento).getFullYear() < 18) {
+      if (!window.confirm('Al ser menor de edad, acepta estar en compañia de un tutor especial? (Representante de sus datos personales)')) {
+        newErrors.fechaNacimiento = 'Debe aceptar que es menor de edad';
+      }
+    }
 
     // Validación género
     if (!formData.genero) {

@@ -26,7 +26,7 @@ const Header = () => {
         </span>
         <img
           onClick={() => navigate('/profile')}
-          src="/path-to-profile-image.jpg"
+          src="https://elmatecreativos.com/wp-content/uploads/2014/06/logo_leanspire.jpg"
           alt="Profile"
           className="w-8 h-8 rounded-full cursor-pointer object-cover"
         />

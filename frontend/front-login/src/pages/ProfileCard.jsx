@@ -23,6 +23,33 @@ const ProfileCard = () => {
     }
   }, [user]);
 
+  const handleExportProfile = () => {
+    // Crear objeto con los datos del perfil
+    const profileData = {
+      email: user.email,
+      telefono: user.telefono,
+      direccion: user.direccion,
+      fecha_nacimiento: user.fecha_nacimiento,
+      genero: user.genero,
+      ocupacion: user.ocupacion,
+      nombre: user.nombre,
+      cedula: user.cedula,
+      exportDate: new Date().toISOString()
+    };
+
+    // Convertir a JSON y crear el archivo
+    const jsonString = JSON.stringify(profileData, null, 2);
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `perfil_${user.nombre}_${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="min-h-screen bg-[#1C1C1C] text-white">
       {/* Header */}
@@ -125,13 +152,15 @@ const ProfileCard = () => {
             >
               Editar Perfil
             </button>
-            <button className="bg-[#0D4E2C] text-white px-4 py-2 rounded">
+            <button className="bg-[#0D4E2C] text-white px-4 py-2 rounded"
+              onClick={handleExportProfile}
+            >
               Exportar datos
             </button>
           </div>
           <button
             className="text-gray-400 text-sm"
-            onClick={() => navigate('/consents')}
+            onClick={() => navigate('/lopd-permissions')}
           >
             Ver Solicitud de consentimiento
           </button>

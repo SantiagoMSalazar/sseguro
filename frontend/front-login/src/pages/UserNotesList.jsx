@@ -7,11 +7,20 @@ const API_URL = 'http://localhost:3000/admin/users';
 
 const UserNotesList = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const [users, setUsers] = useState([]);
   const { setSelectedUser } = useUserSelection();
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate('/login');
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+    }
+  };
 
   useEffect(() => {
     if (!user) return;
@@ -63,8 +72,14 @@ const UserNotesList = () => {
 
   return (
     <div className="min-h-screen bg-[#1C1C1C] text-white">
-      <div className="px-8 py-4">
+      <div className="px-8 py-4 flex justify-between items-center">
         <h1 className="text-xl font-semibold">ShareNotes</h1>
+        <button 
+          onClick={handleLogout}
+          className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+        >
+          Cerrar Sesión
+        </button>
       </div>
       <div className="max-w-3xl mx-auto px-4">
         <h2 className="text-center text-2xl mb-6">Lista de Usuarios</h2>

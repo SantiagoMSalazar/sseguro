@@ -13,40 +13,7 @@ const SharedNotes = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // TODO: Implementar llamada al backend para obtener notas compartidas
-    /*
-    const fetchSharedNotes = async () => {
-      try {
-        setIsLoading(true);
-        // Obtener el ID del usuario actual (podría venir de un contexto de autenticación)
-        // const userId = getCurrentUserId();
-        
-        // Llamada a la API para obtener notas compartidas
-        const response = await fetch(`/api/shared-notes/${userId}`);
-        const data = await response.json();
-        
-        // Transformar los datos si es necesario
-        const formattedNotes = data.map(note => ({
-          id: note.id,
-          title: note.title,
-          content: note.content,
-          date: new Date(note.date).toLocaleDateString(),
-          sharedBy: note.ownerName // nombre del usuario que compartió la nota
-        }));
-        
-        setSharedNotes(formattedNotes);
-      } catch (err) {
-        setError('Error al cargar las notas compartidas');
-        console.error('Error:', err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchSharedNotes();
-    */
-
-    // Datos de ejemplo mientras no hay backend
+    
     setSharedNotes([
       {
         id: 1,

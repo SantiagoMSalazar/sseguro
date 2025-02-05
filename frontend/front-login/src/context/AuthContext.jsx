@@ -56,8 +56,9 @@ export const AuthProvider = ({ children }) => {
   };
   const login = async (email, password) => {
     const { data } = await axios.post('/auth/login', { email, password });
-    await fetchProfile();
-    return data;
+    const profileData = await fetchProfile();
+    setUser(profileData);
+    return profileData; // Retornar los datos del usuario incluyendo el rol
   };
 
   const register = async (userData) => {

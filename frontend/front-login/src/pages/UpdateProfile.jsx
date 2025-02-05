@@ -33,10 +33,96 @@ const UpdateProfile = () => {
   }, [user]);
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    const { name, value } = e.target;
+    const newErrors = {};
+
+    // Validaciones específicas por campo
+    switch (name) {
+      case 'email':
+        if (!value.trim()) {
+          newErrors.email = 'El correo es requerido';
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+          newErrors.email = 'Ingrese un correo válido';
+        }
+        break;
+
+      case 'telefono':
+        if (!value.trim()) {
+          newErrors.telefono = 'El teléfono es requerido';
+        } else if (!/^\d{10}$/.test(value)) {
+          newErrors.telefono = 'Ingrese un teléfono válido de 10 dígitos';
+        }
+        break;
+
+      case 'direccion':
+        if (!value.trim()) {
+          newErrors.direccion = 'La dirección es requerida';
+        } else if (value.length > 200) {
+          newErrors.direccion = 'La dirección no puede exceder los 200 caracteres';
+        } else if (/[<>{}()\\/\\]|script|SELECT|INSERT|UPDATE|DELETE|DROP|UNION|WHERE/i.test(value)) {
+          newErrors.direccion = 'La dirección contiene caracteres no permitidos';
+        } else if (/['";]/.test(value)) {
+          newErrors.direccion = 'No se permiten comillas ni punto y coma en la dirección';
+        } else if (/-{2,}/.test(value)) {
+          newErrors.direccion = 'No se permiten guiones consecutivos';
+        } else if (/\s{3,}/.test(value)) {
+          newErrors.direccion = 'Demasiados espacios consecutivos';
+        }
+        break;
+
+      case 'fecha_nacimiento':
+        if (!value) {
+          newErrors.fecha_nacimiento = 'La fecha de nacimiento es requerida';
+        } else {
+          const fechaNac = new Date(value);
+          const hoy = new Date();
+          if (fechaNac > hoy) {
+            newErrors.fecha_nacimiento = 'La fecha no puede ser mayor a la actual';
+          }
+          // Verificar si es menor de edad
+          const edad = hoy.getFullYear() - fechaNac.getFullYear();
+          if (edad < 18) {
+            if (!window.confirm('Al ser menor de edad, acepta estar en compañia de un tutor especial? (Representante de sus datos personales)')) {
+              newErrors.fecha_nacimiento = 'Debe aceptar que es menor de edad';
+              return;
+            }
+          }
+        }
+        break;
+
+      case 'genero':
+        if (!value) {
+          newErrors.genero = 'Seleccione un género';
+        }
+        break;
+      case 'ocupacion':
+        if (!value.trim()) {
+          newErrors.ocupacion = 'La ocupación es requerida';
+        } else if (value.length > 50) {
+          newErrors.ocupacion = 'La ocupación no puede exceder los 50 caracteres';
+        } else if (/[<>{}()/\\]|script|SELECT|INSERT|UPDATE|DELETE|DROP|UNION|WHERE/i.test(value)) {
+          newErrors.ocupacion = 'La ocupación contiene caracteres no permitidos';
+        } else if (/['";]/.test(value)) {
+          newErrors.ocupacion = 'No se permiten comillas ni punto y coma en la ocupación';
+        } else if (/\s{2,}/.test(value)) {
+          newErrors.ocupacion = 'No se permiten espacios consecutivos';
+        
+        } 
+        break;
+    }
+
+    // Si hay errores, mostrarlos
+    if (Object.keys(newErrors).length > 0) {
+      setError(Object.values(newErrors)[0]); // Mostrar el primer error
+      return;
+    }
+
+    // Si no hay errores, actualizar el estado
+    setError('');
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -44,13 +130,54 @@ const UpdateProfile = () => {
     setError('');
     setSuccessMessage('');
 
+    // Validar todos los campos antes de enviar
+    const allErrors = {};
+
+    // Validar email
+    if (!formData.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      allErrors.email = 'Ingrese un correo válido';
+    }
+
+    // Validar teléfono
+    if (!formData.telefono.trim() || !/^\d{10}$/.test(formData.telefono)) {
+      allErrors.telefono = 'Ingrese un teléfono válido de 10 dígitos';
+    }
+
+    // Validar dirección
+    if (!formData.direccion.trim()) {
+      allErrors.direccion = 'La dirección es requerida';
+    }
+
+    // Validar fecha de nacimiento
+    if (!formData.fecha_nacimiento) {
+      allErrors.fecha_nacimiento = 'La fecha de nacimiento es requerida';
+    } else {
+      const fechaNac = new Date(formData.fecha_nacimiento);
+      const hoy = new Date();
+      if (fechaNac > hoy) {
+        allErrors.fecha_nacimiento = 'La fecha no puede ser mayor a la actual';
+      }
+    }
+
+    // Validar género
+    if (!formData.genero) {
+      allErrors.genero = 'Seleccione un género';
+    }
+
+    // Si hay errores, mostrar el primero y detener el envío
+    if (Object.keys(allErrors).length > 0) {
+      setError(Object.values(allErrors)[0]);
+      return;
+    }
+
+    // Si no hay errores, proceder con el envío
     try {
       await axios.put('/users/profile', formData, {
         withCredentials: true
       });
-      await fetchProfile(); // Actualizar datos en el contexto
+      await fetchProfile();
       setSuccessMessage('Perfil actualizado correctamente');
-      setTimeout(() => navigate('/profile'), 2000); // Redirigir después de 2 segundos
+      setTimeout(() => navigate('/profile'), 2000);
     } catch (error) {
       setError(error.response?.data?.message || 'Error al actualizar el perfil');
     }
@@ -59,10 +186,10 @@ const UpdateProfile = () => {
   return (
     <div className="min-h-screen bg-[#1C1C1C] text-white">
       <Header />
-      
+
       <div className="max-w-5xl mx-auto px-8 py-8">
         <h1 className="text-2xl mb-6">Actualizar Perfil</h1>
-        
+
         {error && <div className="bg-red-500 text-white p-3 mb-4 rounded">{error}</div>}
         {successMessage && <div className="bg-green-500 text-white p-3 mb-4 rounded">{successMessage}</div>}
 
