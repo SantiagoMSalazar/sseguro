@@ -8,7 +8,7 @@ const LoginPage = () => {
     password: ''
   });
   const [errors, setErrors] = useState({});
-  const { login } = useAuth();
+  const { login, user } = useAuth();
   const navigate = useNavigate();
 
   const validateForm = () => {
@@ -45,9 +45,21 @@ const LoginPage = () => {
     if (validateForm()) {
       try {
         await login(formData.username, formData.password);
-        navigate('/notes');
+        // Verificar el rol después del login y redirigir según corresponda
+        const currentUser = user; // Obtenemos el usuario actual
+        
+        if (currentUser && currentUser.rol === 'admin') {
+          navigate('/users-list');  // Ruta principal para admin
+        } else {
+          navigate('/notes');  // Ruta principal para usuarios normales
+        }
       } catch (error) {
-        alert(error.message);
+        // Mejorar el manejo de errores
+        if (error.response?.data?.error) {
+          alert(error.response.data.error);
+        } else {
+          alert('Error al iniciar sesión. Por favor, intente nuevamente.');
+        }
       }
     }
   };

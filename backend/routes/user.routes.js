@@ -22,7 +22,8 @@ router.get('/profile', authenticateToken, async (req, res) => {
       direccion: user.direccion,
       ocupacion: user.ocupacion,
       genero: user.genero,
-      fecha_nacimiento: user.fecha_nacimiento
+      fecha_nacimiento: user.fecha_nacimiento,
+      rol: user.rol
     })
   } catch (error) {
     res.status(400).json({ error: error.message })

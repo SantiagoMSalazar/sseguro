@@ -1,6 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
-
 const AuthContext = createContext();
 
 // Configuración base de Axios
@@ -47,6 +46,7 @@ export const AuthProvider = ({ children }) => {
   const fetchProfile = async () => {
     try {
       const { data } = await axios.get('/users/profile');
+      // Asumiendo que el backend envía el rol del usuario en la respuesta del profile
       setUser(data);
       return data;
     } catch (error) {
@@ -54,7 +54,6 @@ export const AuthProvider = ({ children }) => {
       throw error;
     }
   };
-
   const login = async (email, password) => {
     const { data } = await axios.post('/auth/login', { email, password });
     await fetchProfile();
