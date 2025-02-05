@@ -55,6 +55,23 @@ router.put('/permissions', authenticateToken, async (req, res) => {
   }
 })
 
+router.delete('/delAcount', authenticateToken, async (req, res) => {
+  try {
+    const userId = req.user.id
+    await UserRepository.deleteAccount(userId)
+    // Limpiamos la cookie de autenticación
+    res.clearCookie('access_token')
+
+    res.status(200).json({
+      message: 'Cuenta eliminada exitosamente'
+    })
+  } catch (error) {
+    res.status(400).json({
+      error: error.message
+    })
+  }
+})
+
 router.put('/profile', authenticateToken, async (req, res) => {
   const userId = req.user.id // ID del usuario autenticado
   const {

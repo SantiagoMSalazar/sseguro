@@ -7,6 +7,7 @@ const ProfileCard = () => {
   const navigate = useNavigate();
   const { user } = useAuth(); // Obtiene los datos del usuario del context
   const [edad, setEdad] = useState(0);
+  const { deleteAccount, logout } = useAuth();
 
   useEffect(() => {
     if (user && user.fecha_nacimiento) {
@@ -48,6 +49,18 @@ const ProfileCard = () => {
     a.click();
     document.body.removeChild(a);
     window.URL.revokeObjectURL(url);
+  };
+
+  const handleDeleteAccount = async () => {
+    if (window.confirm('¿Está seguro que desea eliminar su cuenta? Esta acción no se puede deshacer.')) {
+      try {
+        await deleteAccount();
+        await logout();
+        navigate('/login');
+      } catch (error) {
+        console.error('Error al eliminar cuenta:', error);
+      }
+    }
   };
 
   return (
@@ -164,7 +177,14 @@ const ProfileCard = () => {
           >
             Ver Solicitud de consentimiento
           </button>
+          <button
+            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+            onClick={handleDeleteAccount}
+          >
+            Eliminar Cuenta
+          </button>
         </div>
+
       </div>
     </div>
   );

@@ -40,6 +40,20 @@ export class UserRepository {
     return user.id
   }
 
+  static async deleteAccount (userId) {
+    try {
+      const result = await User.destroy({
+        where: { id: userId }
+      })
+      if (result === 0) {
+        throw new Error('No se pudo eliminar el usuario')
+      }
+      return true
+    } catch (error) {
+      throw new Error(`Error al eliminar cuenta: ${error.message}`)
+    }
+  }
+
   static async findById (id) {
     try {
       const user = await User.findOne({ where: { id } }) // Busca al usuario por ID

@@ -55,6 +55,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
   const login = async (email, password) => {
+    // eslint-disable-next-line no-unused-vars
     const { data } = await axios.post('/auth/login', { email, password });
     const profileData = await fetchProfile();
     setUser(profileData);
@@ -76,7 +77,15 @@ export const AuthProvider = ({ children }) => {
     });
     return data;
   };
-
+  const deleteAccount = async () => {
+    // eslint-disable-next-line no-useless-catch
+    try {
+      await axios.delete('/users/delAcount');
+      setUser(null);
+    } catch (error) {
+      throw error;
+    }
+  };
   const logout = async () => {
     await axios.get('/auth/logout');
     setUser(null);
@@ -102,7 +111,8 @@ export const AuthProvider = ({ children }) => {
       register, 
       logout,
       updatePermissions, 
-      fetchProfile 
+      fetchProfile,
+      deleteAccount
     }}>
       {children}
     </AuthContext.Provider>
