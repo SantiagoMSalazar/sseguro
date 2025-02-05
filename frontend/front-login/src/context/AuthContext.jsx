@@ -82,13 +82,26 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
+  const updatePermissions = async (permissionsData) => {
+    // eslint-disable-next-line no-useless-catch
+    try {
+      const response = await axios.put('/users/permissions', { 
+        permissions: permissionsData 
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
   return (
     <AuthContext.Provider value={{ 
       user, 
       loading,
       login, 
       register, 
-      logout, 
+      logout,
+      updatePermissions, 
       fetchProfile 
     }}>
       {children}
