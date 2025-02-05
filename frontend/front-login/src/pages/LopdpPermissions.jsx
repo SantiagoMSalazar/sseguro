@@ -4,15 +4,16 @@ import { useNavigate } from 'react-router-dom';
 
 const LopdpPermissions = () => {
   const navigate = useNavigate();
+
   const [permissions, setPermissions] = useState({
     nombres: { share: false, date: '' },
     apellidos: { share: false, date: '' },
     cedula: { share: false, date: '' },
-    edad: { share: false, date: '' },
+    edad: { share: true, date: '' },
     direccion: { share: false, date: '' },
     correo: { share: false, date: '' },
     telefono: { share: false, date: '' },
-    contactoEmergencia: { share: false, date: '' }
+    Genero: { share: false, date: '' }
   });
 
   const handleToggle = (field) => {
@@ -40,14 +41,13 @@ const LopdpPermissions = () => {
   };
 
   const fieldLabels = {
-    nombres: 'Tratamiento de nombres',
-    apellidos: 'Tratamiento de Apellidos',
+    nombres: 'Tratamiento de nombre y apellido',
     cedula: 'Cédula',
     edad: 'Edad',
     direccion: 'Dirección',
     correo: 'Correo electrónico',
     telefono: 'Teléfono',
-    contactoEmergencia: 'Contacto de emergencia'
+    Genero: 'Género'
   };
 
   return (

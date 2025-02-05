@@ -14,11 +14,15 @@ import NoteViewerAdmin from "../pages/NoteViewerAdmin";
 import NoteGridViewerAdmin from "../pages/NoteGridViewerAdmin";
 import UserNotesList from "../pages/UserNotesList";
 import PrivateRoute from "../components/auth/privateRoute";
+import AdminUserView from "../pages/AdminUserView";
 import { AuthProvider } from "../context/AuthContext";
+import { UserSelectionProvider } from "../context/UserSelectionContext";
 
 const AppRouter = () => {
   return (
     <BrowserRouter>
+      
+      <UserSelectionProvider>
       <AuthProvider>
       <Routes>
         {/* Rutas para Sesión y configuraciones*/}
@@ -27,7 +31,6 @@ const AppRouter = () => {
         <Route path="/config" element={<ConfigPage />} />
         <Route path='/' element={<LoginPage />} />
         <Route path="/consent-form-register" element={<ConsentForm />} />
-        {/* <Route path='/home' element={<HomePage />} /> */}
         
         <Route element={<PrivateRoute />}>
             {/* Rutas para perfil */}
@@ -47,11 +50,14 @@ const AppRouter = () => {
             {/* Rutas para páginas de admin */}
             <Route path="/notes/view/:id" element={<NoteViewerAdmin />} />
             <Route path="/shared-notes" element={<NoteGridViewerAdmin />} />
-            <Route path="/users-notes" element={<UserNotesList />} />
+            <Route path="/users-list" element={<UserNotesList />} />
+            <Route path="/admin-userView" element={<AdminUserView/>}/>
           </Route>
         
       </Routes>
       </AuthProvider>
+      </UserSelectionProvider>
+      
     </BrowserRouter>
   );
 };

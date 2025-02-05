@@ -57,7 +57,49 @@ const ConsentForm = () => {
                 </ul>
               </section>
 
-              {/* Continue with similar sections for the rest of the agreement */}
+              <section>
+                <h3 className="font-bold mb-2">4. FINALIDADES DEL TRATAMIENTO</h3>
+                <p>Los datos personales serán tratados con las siguientes finalidades:</p>
+                <ul className="list-disc pl-6">
+                  <li>Gestión y administración del sistema ShareNotes.</li>
+                  <li>Almacenamiento, organización y procesamiento de notas personales del usuario.</li>
+                  <li>Compartición de notas según la configuración y consentimiento del usuario.</li>
+                  <li>Facilitación de la interacción entre usuarios.</li>
+                  <li>Envío de notificaciones y correos electrónicos según las preferencias del usuario.</li>
+                  <li>Garantizar la seguridad y funcionalidad del servicio.</li>
+                  <li>Cumplir con las obligaciones legales aplicables en materia de protección de datos.</li>
+                </ul>
+              </section>
+
+              <section>
+                <h3 className="font-bold mb-2">5. SEGURIDAD Y CONSERVACIÓN DE DATOS</h3>
+                <p>ShareNotes implementa medidas técnicas y organizativas adecuadas para garantizar la seguridad, integridad y confidencialidad de los datos personales, de conformidad con la LOPD del Ecuador.</p>
+                <p>Los datos personales serán conservados únicamente durante el tiempo necesario para cumplir con las finalidades del tratamiento o según lo requerido por ley.</p>
+              </section>
+
+              <section>
+                <h3 className="font-bold mb-2">6. TRANSFERENCIA DE DATOS Y USO COMPARTIDO</h3>
+                <p>Los datos personales no serán transferidos a terceros sin consentimiento previo del Titular, salvo en los siguientes casos:</p>
+                <ul className="list-disc pl-6">
+                  <li>Cumplimiento de obligaciones legales.</li>
+                  <li>Requerimientos de autoridades competentes.</li>
+                  <li>Servicios subcontratados que actúan como Encargados del Tratamiento, bajo contratos que garantizan la protección de los datos.</li>
+                </ul>
+              </section>
+
+              <section>
+                <h3 className="font-bold mb-2">7. MODIFICACIONES AL ACUERDO</h3>
+                <p>El presente Acuerdo podrá ser modificado para ajustarse a nuevas normativas o cambios en el servicio. Se notificará a los usuarios de cualquier actualización relevante, y se requerirá nuevamente el consentimiento en caso de cambios sustanciales.</p>
+              </section>
+
+              <section>
+                <h3 className="font-bold mb-2">8. ACEPTACIÓN Y REVOCACIÓN DEL CONSENTIMIENTO</h3>
+                <p>Al aceptar este Acuerdo, el Titular consiente el tratamiento de sus datos personales conforme a lo aquí estipulado. Sin embargo, en cualquier momento podrá:</p>
+                <ul className="list-disc pl-6">
+                  <li>Modificar o revocar su consentimiento accediendo a la configuración de privacidad.</li>
+                  <li>Eliminar su cuenta, lo que resultará en la eliminación de sus datos (excepto cuando una norma requiera su conservación).</li>
+                </ul>
+              </section>
 
               <section className="border-t border-gray-700 pt-4 mt-6">
                 <p className="text-sm text-center">Para más información o consultas, contacte a:</p>
@@ -67,6 +109,7 @@ const ConsentForm = () => {
                   <p>📍 Dirección: Argelia, Quito</p>
                 </div>
               </section>
+
             </div>
           </div>
         </div>
@@ -101,9 +144,11 @@ const ConsentForm = () => {
           </button>
           </div>
         </div>
+
       </div>
     </div>
   );
 };
+
 
 export default ConsentForm;
