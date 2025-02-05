@@ -20,6 +20,8 @@ router.get('/profile', authenticateToken, async (req, res) => {
       cedula: user.cedula,
       telefono: user.telefono,
       direccion: user.direccion,
+      ocupacion: user.ocupacion,
+      genero: user.genero,
       fecha_nacimiento: user.fecha_nacimiento
     })
   } catch (error) {
@@ -38,17 +40,17 @@ router.put('/permissions', authenticateToken, async (req, res) => {
 
     // Iterar sobre los permisos recibidos y actualizarlos
     // eslint-disable-next-line camelcase
-    for (const { field_name, is_visible } of permissions) {
+    for (const { field_name, is_visible, expiration_date } of permissions) {
       if (!allowedFields.includes(field_name)) {
         // eslint-disable-next-line camelcase
         throw new Error(`Campo no permitido: ${field_name}`)
       }
-      await UserRepository.updatePermisions(req.user.id, field_name, is_visible)
+      await UserRepository.updatePermisions(req.user.id, field_name, is_visible, expiration_date)
     }
 
     res.status(200).json({ message: 'Permisos actualizados correctamente' })
   } catch (error) {
-    res.status(400).json({ error: error.message })
+    res.status(400).json({ error: 'Error a actualizar:' + error.message })
   }
 })
 

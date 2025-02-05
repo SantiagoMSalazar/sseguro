@@ -21,6 +21,10 @@ const UserPermission = sequelize.define('UserPermission', {
     type: DataTypes.BOOLEAN,
     allowNull: false,
     defaultValue: false
+  },
+  expiration_date: {
+    type: DataTypes.DATEONLY,
+    allowNull: false
   }
 }, {
   tableName: 'user_permissions',

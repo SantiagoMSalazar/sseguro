@@ -33,8 +33,8 @@ CREATE TABLE User_Permissions (
   PRIMARY KEY (user_id, field_name)
 );
 
-
-
+ALTER table User_Permissions add column expiration_date date not null
+delete FROM User_Permissions
 select * from User_Permissions;
 
 select view
@@ -174,3 +174,108 @@ FROM Users u;
 DELETE FROM users WHERE id = 'a3d38567-8105-4245-b0af-af93d17d26d7'
 DELETE FROM users WHERE id = 'f6ccb905-dee1-4e0f-b5f3-6d71086e5502'
 DELETE FROM users WHERE id = '1accc59e-f817-4aa0-9e03-9a03abe11dc7'
+
+CREATE OR REPLACE VIEW public_users AS
+SELECT
+    u.id,
+    CASE
+        WHEN EXISTS (
+            SELECT 1 FROM User_Permissions p
+            WHERE p.user_id = u.id
+            AND p.field_name = 'nombre'
+            AND p.is_visible = TRUE
+            AND (p.expiration_date IS NULL OR p.expiration_date >= NOW()) -- Verifica que no haya expirado
+        ) THEN u.nombre
+        ELSE 'Anonimizado'
+    END AS nombre,
+
+    CASE
+        WHEN EXISTS (
+            SELECT 1 FROM User_Permissions p
+            WHERE p.user_id = u.id
+            AND p.field_name = 'email'
+            AND p.is_visible = TRUE
+            AND (p.expiration_date IS NULL OR p.expiration_date >= NOW())
+        ) THEN u.email
+        ELSE 'anonimizado@email.com'
+    END AS email,
+
+    CASE
+        WHEN EXISTS (
+            SELECT 1 FROM User_Permissions p
+            WHERE p.user_id = u.id
+            AND p.field_name = 'cedula'
+            AND p.is_visible = TRUE
+            AND (p.expiration_date IS NULL OR p.expiration_date >= NOW())
+        ) THEN u.cedula
+        ELSE 'XXXXXXXXXX'
+    END AS cedula,
+
+    CASE
+        WHEN EXISTS (
+            SELECT 1 FROM User_Permissions p
+            WHERE p.user_id = u.id
+            AND p.field_name = 'telefono'
+            AND p.is_visible = TRUE
+            AND (p.expiration_date IS NULL OR p.expiration_date >= NOW())
+        ) THEN u.telefono
+        ELSE '0000000000'
+    END AS telefono,
+
+    CASE
+        WHEN EXISTS (
+            SELECT 1 FROM User_Permissions p
+            WHERE p.user_id = u.id
+            AND p.field_name = 'direccion'
+            AND p.is_visible = TRUE
+            AND (p.expiration_date IS NULL OR p.expiration_date >= NOW())
+        ) THEN u.direccion
+        ELSE 'Dirección Oculta'
+    END AS direccion,
+
+    CASE
+        WHEN EXISTS (
+            SELECT 1 FROM User_Permissions p
+            WHERE p.user_id = u.id
+            AND p.field_name = 'fecha_nacimiento'
+            AND p.is_visible = TRUE
+            AND (p.expiration_date IS NULL OR p.expiration_date >= NOW())
+        ) THEN u.fecha_nacimiento
+        ELSE NULL
+    END AS fecha_nacimiento,
+
+    CASE
+        WHEN EXISTS (
+            SELECT 1 FROM User_Permissions p
+            WHERE p.user_id = u.id
+            AND p.field_name = 'genero'
+            AND p.is_visible = TRUE
+            AND (p.expiration_date IS NULL OR p.expiration_date >= NOW())
+        ) THEN u.genero
+        ELSE 'No Disponible'
+    END AS genero,
+
+    CASE
+        WHEN EXISTS (
+            SELECT 1 FROM User_Permissions p
+            WHERE p.user_id = u.id
+            AND p.field_name = 'ocupacion'
+            AND p.is_visible = TRUE
+            AND (p.expiration_date IS NULL OR p.expiration_date >= NOW())
+        ) THEN u.ocupacion
+        ELSE 'No Disponible'
+    END AS ocupacion,
+
+    CASE
+        WHEN EXISTS (
+            SELECT 1 FROM User_Permissions p
+            WHERE p.user_id = u.id
+            AND p.field_name = 'rol'
+            AND p.is_visible = TRUE
+            AND (p.expiration_date IS NULL OR p.expiration_date >= NOW())
+        ) THEN u.rol
+        ELSE 'No Disponible'
+    END AS rol
+
+FROM Users u;
+

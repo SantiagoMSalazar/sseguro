@@ -71,18 +71,19 @@ export class UserRepository {
     }
   }
 
-  static async updatePermisions (userId, fieldName, isVisible) {
+  static async updatePermisions (userId, fieldName, isVisible, expirationDate) {
     await UserPermission.upsert({
       user_id: userId,
       field_name: fieldName,
-      is_visible: isVisible
+      is_visible: isVisible,
+      expiration_date: expirationDate
     })
   }
 
   static async getUserPermissions (userId) {
     const permissions = await UserPermission.findAll({
       where: { user_id: userId },
-      attributes: ['field_name', 'is_visible'],
+      attributes: ['field_name', 'is_visible', 'expiration_date'],
       raw: true
     })
     // eslint-disable-next-line camelcase
@@ -99,7 +100,7 @@ export class UserRepository {
         include: [{
           model: UserPermission,
           as: 'permissions',
-          attributes: ['field_name', 'is_visible']
+          attributes: ['field_name', 'is_visible', 'expiration_date']
         }]
       })
 
