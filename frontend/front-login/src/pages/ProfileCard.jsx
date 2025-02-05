@@ -26,7 +26,7 @@ const ProfileCard = () => {
   return (
     <div className="min-h-screen bg-[#1C1C1C] text-white">
       {/* Header */}
-      <Header/>
+      <Header />
 
       {/* Logo */}
       <div className="px-8 py-4">
@@ -38,7 +38,7 @@ const ProfileCard = () => {
         <div className="flex justify-between items-start">
           <div className="w-2/3">
             <h2 className="text-2xl mb-8">Bienvenido</h2>
-            
+
             <div className="space-y-8">
               <section>
                 <h3 className="text-white font-bold mb-4">Información del Perfil</h3>
@@ -85,6 +85,18 @@ const ProfileCard = () => {
                       {user?.telefono || 'No disponible'}
                     </div>
                   </div>
+                  <div>
+                    <label className="text-gray-400 text-sm">Ocupación</label>
+                    <div className="border-b border-gray-700 py-1">
+                      {user?.ocupacion || 'No disponible'}
+                    </div>
+                  </div>
+                  <div>
+                    <label className="text-gray-400 text-sm">Género</label>
+                    <div className="border-b border-gray-700 py-1">
+                      {user?.genero || 'No disponible'}
+                    </div>
+                  </div>
                 </div>
               </section>
             </div>
@@ -93,9 +105,9 @@ const ProfileCard = () => {
           {/* Right Side - Profile Image */}
           <div className="w-1/3 flex justify-center mt-16">
             <div className="w-64 h-64 rounded-full bg-gray-700 overflow-hidden flex items-center justify-center">
-              <svg 
-                className="w-32 h-32 text-gray-400" 
-                fill="currentColor" 
+              <svg
+                className="w-32 h-32 text-gray-400"
+                fill="currentColor"
                 viewBox="0 0 24 24"
               >
                 <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
@@ -106,10 +118,21 @@ const ProfileCard = () => {
 
         {/* Bottom Buttons */}
         <div className="flex justify-between mt-8">
-          <button className="bg-[#0D4E2C] text-white px-4 py-2 rounded">
-            Exportar datos
-          </button>
-          <button className="text-gray-400 text-sm">
+          <div className="flex gap-4">
+            <button
+              className="bg-[#0D4E2C] text-white px-4 py-2 rounded"
+              onClick={() => navigate('/update-profile')}
+            >
+              Editar Perfil
+            </button>
+            <button className="bg-[#0D4E2C] text-white px-4 py-2 rounded">
+              Exportar datos
+            </button>
+          </div>
+          <button
+            className="text-gray-400 text-sm"
+            onClick={() => navigate('/consents')}
+          >
             Ver Solicitud de consentimiento
           </button>
         </div>
